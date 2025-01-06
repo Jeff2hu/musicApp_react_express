@@ -1,7 +1,6 @@
 import cloudinary from "../lib/cloudinary.js";
 import Album from "../model/album.model.js";
 import Song from "../model/song.model.js";
-import { ServerError } from "../utils/apiResponse.js";
 
 const uploadToCloudinary = async (file) => {
   try {
@@ -10,7 +9,7 @@ const uploadToCloudinary = async (file) => {
     });
     return result.secure_url;
   } catch (error) {
-    throw new ServerError("Failed to upload to cloudinary");
+    throw new Error("Failed to upload to cloudinary");
   }
 };
 
@@ -45,10 +44,10 @@ export const createSong = async (req) => {
 
 export const deleteSong = async (id) => {
   try {
-    // 先找到歌曲
     const song = await Song.findById(id);
+
     if (!song) {
-      throw new ServerError("Song not found");
+      throw new Error("Song not found");
     }
 
     // 如果歌曲屬於某個專輯，先更新專輯
@@ -60,8 +59,35 @@ export const deleteSong = async (id) => {
 
     // 最後刪除歌曲
     await Song.findByIdAndDelete(id);
+  } catch (error) {
+    throw error;
+  }
+};
 
-    return song;
+export const createAlbum = async (req) => {
+  try {
+    const { title, artist, releaseYear } = req.body;
+    const { imageFile } = req.files;
+
+    const imageUrl = await uploadToCloudinary(imageFile);
+
+    const newAlbum = await Album.create({
+      title,
+      artist,
+      imageUrl,
+      releaseYear,
+    });
+
+    return newAlbum;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteAlbum = async (id) => {
+  try {
+    await Song.deleteMany({ albumId: id });
+    await Album.findByIdAndDelete(id);
   } catch (error) {
     throw error;
   }

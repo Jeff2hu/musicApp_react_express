@@ -23,6 +23,7 @@ const port = process.env.PORT || 8000;
 app.use(cors());
 app.use(express.json());
 app.use(clerkMiddleware());
+
 app.use(
   fileUpload({
     useTempFiles: true,
@@ -38,6 +39,10 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/songs", songRoutes);
 app.use("/api/albums", albumRoutes);
 app.use("/api/stats", statsRoutes);
+
+app.use((err, req, res, next) => {
+  res.status(500).json({ message: err.message });
+});
 
 app.listen(port, async () => {
   await connectDB();

@@ -1,36 +1,94 @@
-import { createSong, deleteSong } from "../service/admin.service.js";
 import {
-  BadRequestError,
-  handleErrorResponse,
-  handleSuccessResponse,
-} from "../utils/apiResponse.js";
+  createAlbum,
+  createSong,
+  deleteAlbum,
+  deleteSong,
+} from "../service/admin.service.js";
 
-export const createSongController = async (req, res) => {
+export const checkAdminController = async (req, res, next) => {
   try {
+    res.status(200).json({ message: "Admin check success" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const createSongController = async (req, res, next) => {
+  try {
+    const { title, artist, albumId, duration } = req.body;
+
+    if (!title || !artist || !albumId || !duration) {
+      res.status(400).json({ message: "Invalid request" });
+      return;
+    }
+
     if (!req.files || !req.files.audioFile || !req.files.imageFile) {
-      throw new BadRequestError("Song and image are required");
+      res.status(400).json({ message: "AudioFile and ImageFile are required" });
+      return;
     }
 
     const song = await createSong(req);
 
-    return handleSuccessResponse(res, song);
+    res.status(200).json({ message: "Song created successfully", data: song });
   } catch (err) {
-    handleErrorResponse(res, err);
+    next(err);
   }
 };
 
-export const deleteSongController = async (req, res) => {
+export const deleteSongController = async (req, res, next) => {
   try {
     const { id } = req.params;
 
     if (!id) {
-      throw new BadRequestError("Song id is required");
+      res.status(400).json({ message: "Song id is required" });
+      return;
     }
 
-    const song = await deleteSong(id);
+    await deleteSong(id);
 
-    return handleSuccessResponse(res, song);
+    res.status(200).json({ message: "Song deleted successfully", data: null });
   } catch (err) {
-    handleErrorResponse(res, err);
+    next(err);
+  }
+};
+
+export const createAlbumController = async (req, res, next) => {
+  try {
+    const { title, artist, releaseYear } = req.body;
+
+    if (!title || !artist || !releaseYear) {
+      res.status(400).json({ message: "Invalid request" });
+      return;
+    }
+
+    if (!req.files || !req.files.imageFile) {
+      res.status(400).json({ message: "ImageFile is required" });
+      return;
+    }
+
+    const album = await createAlbum(req);
+
+    res
+      .status(200)
+      .json({ message: "Album created successfully", data: album });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const deleteAlbumController = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      res.status(400).json({ message: "Album id is required" });
+      return;
+    }
+
+    await deleteAlbum(id);
+
+    res.status(200).json({ message: "Album deleted successfully", data: null });
+  } catch (err) {
+    next(err);
   }
 };

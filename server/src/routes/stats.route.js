@@ -1,9 +1,12 @@
 import express from "express";
+import { getStatsController } from "../controller/stats.controller.js";
+import {
+  adminMiddleware,
+  protectMiddleware,
+} from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("Hello World");
-});
+router.get("/", protectMiddleware, adminMiddleware, getStatsController);
 
 export default router;

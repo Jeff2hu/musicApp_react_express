@@ -1,5 +1,4 @@
 import User from "../model/user.model.js";
-import { ServerError } from "../utils/apiResponse.js";
 
 export const callbackService = async ({
   id,
@@ -21,7 +20,7 @@ export const callbackService = async ({
     }
 
     return existingUser;
-  } catch (err) {
-    throw new ServerError(err.message);
+  } catch (error) {
+    throw error;
   }
 };

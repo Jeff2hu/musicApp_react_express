@@ -25,6 +25,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         setLoading(false);
       }
     };
+
     initAuth();
   }, [getToken]);
 

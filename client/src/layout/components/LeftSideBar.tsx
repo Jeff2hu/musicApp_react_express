@@ -1,12 +1,22 @@
+import { useGetAlbum } from "@/api/album/hook";
 import PlaylistsSkeleton from "@/components/skeletons/PlaylistsSkeleton";
 import { buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import useMusicStore from "@/zustand/useMusicStore";
 import { HomeIcon, LibraryIcon, MessageCircle } from "lucide-react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const LeftSideBar = () => {
-  const isLoading = true;
+  const { setAlbums } = useMusicStore();
+  const { data: albums, isLoading: isLoadingAlbums } = useGetAlbum();
+
+  useEffect(() => {
+    if (albums) {
+      setAlbums(albums);
+    }
+  }, [albums]);
 
   return (
     <div className="h-full flex flex-col gap-2">
@@ -52,7 +62,7 @@ const LeftSideBar = () => {
 
         <ScrollArea className="h-[calc(100vh-400px)]">
           <div className="space-y-2">
-            {isLoading ? (
+            {isLoadingAlbums ? (
               <PlaylistsSkeleton />
             ) : (
               <div className="flex flex-col gap-2"></div>

@@ -1,10 +1,12 @@
+import { Album } from "@/type/album";
+import { Song } from "@/type/song";
 import { create } from "zustand";
 
 interface MusicStore {
-  albums: any[];
-  songs: any[];
-  setAlbums: (albums: any[]) => void;
-  setSongs: (songs: any[]) => void;
+  albums: Album[];
+  songs: Song[];
+  setAlbums: (albums: Album[]) => void;
+  setSongs: (songs: Song[]) => void;
 }
 
 const useMusicStore = create<MusicStore>((set) => ({

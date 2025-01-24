@@ -1,4 +1,4 @@
-import { useGetAlbum } from "@/api/album/hook";
+import { useGetAlbums } from "@/api/album/hook";
 import PlaylistsSkeleton from "@/components/skeletons/PlaylistsSkeleton";
 import { buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -10,13 +10,13 @@ import { Link } from "react-router-dom";
 
 const LeftSideBar = () => {
   const { setAlbums } = useMusicStore();
-  const { data: albums, isLoading: isLoadingAlbums } = useGetAlbum();
+  const { data: albums, isLoading: isAlbumsLoading } = useGetAlbums();
 
   useEffect(() => {
     if (albums) {
       setAlbums(albums);
     }
-  }, [albums]);
+  }, [albums, setAlbums]);
 
   return (
     <div className="h-full flex flex-col gap-2">
@@ -62,10 +62,29 @@ const LeftSideBar = () => {
 
         <ScrollArea className="h-[calc(100vh-400px)]">
           <div className="space-y-2">
-            {isLoadingAlbums ? (
-              <PlaylistsSkeleton />
+            {!isAlbumsLoading && albums ? (
+              albums.map((album) => (
+                <Link
+                  key={album._id}
+                  to={`/album/${album._id}s`}
+                  className="p-2 hover:bg-zinc-800 rounded-mg flex items-center gap-3 group cursor-pointer"
+                >
+                  <img
+                    src={album.imageUrl}
+                    alt="Playlist img"
+                    className="size-12 rounded-md flex-shrink-0 object-cover"
+                  />
+
+                  <div className="flex-1 min-w-0 hidden md:block">
+                    <p className="font-medium truncate">{album.title}</p>
+                    <p className="text-sm text-zinc-400 truncate">
+                      Album ． {album.artist}
+                    </p>
+                  </div>
+                </Link>
+              ))
             ) : (
-              <div className="flex flex-col gap-2"></div>
+              <PlaylistsSkeleton />
             )}
           </div>
         </ScrollArea>

@@ -66,7 +66,7 @@ const LeftSideBar = () => {
               albums.map((album) => (
                 <Link
                   key={album._id}
-                  to={`/album/${album._id}s`}
+                  to={`/album/${album._id}`}
                   className="p-2 hover:bg-zinc-800 rounded-mg flex items-center gap-3 group cursor-pointer"
                 >
                   <img

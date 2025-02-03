@@ -3,20 +3,11 @@ import PlaylistsSkeleton from "@/components/skeletons/PlaylistsSkeleton";
 import { buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import useMusicStore from "@/zustand/useMusicStore";
 import { HomeIcon, LibraryIcon, MessageCircle } from "lucide-react";
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const LeftSideBar = () => {
-  const { setAlbums } = useMusicStore();
   const { data: albums, isLoading: isAlbumsLoading } = useGetAlbums();
-
-  useEffect(() => {
-    if (albums) {
-      setAlbums(albums);
-    }
-  }, [albums, setAlbums]);
 
   return (
     <div className="h-full flex flex-col gap-2">

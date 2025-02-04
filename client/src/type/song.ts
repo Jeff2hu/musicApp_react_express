@@ -6,6 +6,6 @@ export type Song = {
   audioUrl: string;
   duration: number;
   albumId: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 };

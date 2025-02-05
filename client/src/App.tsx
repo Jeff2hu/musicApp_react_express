@@ -5,6 +5,7 @@ import AlbumPage from "./pages/album/AlbumPage";
 import AuthCallbackPage from "./pages/authCallback/AuthCallbackPage";
 import ChatPage from "./pages/chat/ChatPage";
 import HomePage from "./pages/home/HomePage";
+import SearchPage from "./pages/search/SearchPage";
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/album/:albumId" element={<AlbumPage />} />
       </Route>
+
+      <Route path="/search" element={<SearchPage />} />
     </Routes>
   );
 }

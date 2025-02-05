@@ -3,8 +3,26 @@ import PlaylistsSkeleton from "@/components/skeletons/PlaylistsSkeleton";
 import { buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { HomeIcon, LibraryIcon, MessageCircle } from "lucide-react";
+import { HomeIcon, LibraryIcon, MessageCircle, SearchIcon } from "lucide-react";
 import { Link } from "react-router-dom";
+
+const links = [
+  {
+    name: "Home",
+    icon: HomeIcon,
+    path: "/",
+  },
+  {
+    name: "Messages",
+    icon: MessageCircle,
+    path: "/chat",
+  },
+  {
+    name: "Search",
+    icon: SearchIcon,
+    path: "/search",
+  },
+];
 
 const LeftSideBar = () => {
   const { data: albums, isLoading: isAlbumsLoading } = useGetAlbums();
@@ -14,31 +32,21 @@ const LeftSideBar = () => {
       {/* Navigation Menu */}
       <div className="bg-zinc-900 rounded-lg p-4">
         <div className="space-y-2">
-          <Link
-            to={"/"}
-            className={cn(
-              buttonVariants({
-                variant: "ghost",
-                className: "w-full justify-start text-white hover:bg-zinc-800",
-              })
-            )}
-          >
-            <HomeIcon className="mr-2 size-5" />
-            <span className="hidden md:inline">Home</span>
-          </Link>
-
-          <Link
-            to={"/chat"}
-            className={cn(
-              buttonVariants({
-                variant: "ghost",
-                className: "w-full justify-start text-white hover:bg-zinc-800",
-              })
-            )}
-          >
-            <MessageCircle className="mr-2 size-5" />
-            <span className="hidden md:inline">Messages</span>
-          </Link>
+          {links.map((link) => (
+            <Link
+              to={link.path}
+              className={cn(
+                buttonVariants({
+                  variant: "ghost",
+                  className:
+                    "w-full justify-start text-white hover:bg-zinc-800",
+                })
+              )}
+            >
+              <link.icon className="mr-2 size-5" />
+              <span className="hidden md:inline">{link.name}</span>
+            </Link>
+          ))}
         </div>
       </div>
 

@@ -14,3 +14,5 @@ export type AuthCallbackResponse = {
   __v: number;
   _id: string;
 };
+
+export type User = AuthCallbackResponse;

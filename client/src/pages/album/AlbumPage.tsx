@@ -49,7 +49,7 @@ const AlbumPage = () => {
   return (
     <div className="h-full">
       {!isAlbumLoading && album ? (
-        <ScrollArea ref={containerRef} className="min-h-[100vh]">
+        <ScrollArea ref={containerRef} className="min-h-[100vh] rounded-md">
           <div className="relative min-h-[100vh]">
             {/* bg gradient */}
             <div

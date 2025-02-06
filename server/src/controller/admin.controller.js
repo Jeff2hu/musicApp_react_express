@@ -7,7 +7,7 @@ import {
 
 export const checkAdminController = async (req, res, next) => {
   try {
-    res.status(200).json({ message: "Admin check success" });
+    res.status(200).json({ message: "Admin check success", data: true });
   } catch (err) {
     next(err);
   }

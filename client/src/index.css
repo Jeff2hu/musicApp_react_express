@@ -65,3 +65,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+html,
+body {
+  scroll-behavior: smooth;
+  scrollbar-color: #3a3a3a #000;
+  scrollbar-width: thin;
+}

@@ -4,6 +4,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { Outlet } from "react-router-dom";
+import AudioPlayer from "./components/AudioPlayer";
 import FriendsActivity from "./components/FriendsActivity";
 import LeftSideBar from "./components/LeftSideBar";
 
@@ -26,7 +27,10 @@ const MainLayout = () => {
 
         <ResizableHandle className="w-1 bg-black opacity-50 rounded-lg transition-colors cursor-col-resize" />
 
-        <ResizablePanel defaultSize={isMobile ? 80 : 60}>
+        <ResizablePanel
+          defaultSize={isMobile ? 80 : 60}
+          className="h-[calc(100vh-120px)]"
+        >
           <Outlet />
         </ResizablePanel>
 
@@ -41,6 +45,8 @@ const MainLayout = () => {
           <FriendsActivity />
         </ResizablePanel>
       </ResizablePanelGroup>
+
+      <AudioPlayer />
     </div>
   );
 };

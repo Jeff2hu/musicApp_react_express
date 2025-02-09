@@ -9,7 +9,7 @@ const FriendsActivity = () => {
   const isPlaying = true;
 
   return (
-    <div className="h-full bg-zinc-900 rounded-lg flex flex-col">
+    <div className="h-[calc(100vh-120px)] bg-zinc-900 rounded-lg flex flex-col">
       <div className="flex justify-between items-center p-4 border-b border-zinc-800">
         <div className="flex items-center gap-2">
           <Users className="size-5 shrink-0" />
@@ -27,7 +27,7 @@ const FriendsActivity = () => {
               <div className="flex items-start gap-3">
                 <div className="relative">
                   <Avatar className="size-10 border border-zinc-800">
-                    <AvatarImage src={user.imageUrl} alt={user.fullName} />
+                    <AvatarImage src={user.imageUrl} alt="user-image" />
                     <AvatarFallback>{user.fullName[0]}</AvatarFallback>
                   </Avatar>
 
@@ -40,7 +40,7 @@ const FriendsActivity = () => {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="font-medium text-sm text-white">
-                      {user.fullName}
+                      {user.fullName.split("")[0]} ...
                     </span>
                     {isPlaying && (
                       <Music className="size-3.5 text-emerald-400 shrink-0" />

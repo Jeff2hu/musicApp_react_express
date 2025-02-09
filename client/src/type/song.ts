@@ -9,3 +9,11 @@ export type Song = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type SongLite = {
+  _id: string;
+  title: string;
+  artist: string;
+  imageUrl: string;
+  audioUrl: string;
+};

@@ -23,8 +23,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         const token = await getToken();
         if (token) {
           setToken(token);
+          await checkAdminApi();
         }
-        await checkAdminApi();
       } catch (error) {
         console.error("Error in AuthProvider", error);
         setAlertOption({

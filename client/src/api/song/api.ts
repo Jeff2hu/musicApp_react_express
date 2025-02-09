@@ -1,16 +1,42 @@
 import { axiosInstance } from "@/lib/axios";
 import { ApiResponse } from "@/type/apiResponse";
-import { AuthCallBackRequest, AuthCallbackResponse } from "@/type/user";
+import { SongLite } from "@/type/song";
 import errorApiHandler from "@/utils/errorApiHandler";
 import { AxiosResponse } from "axios";
 import { SONG_API_PORTOCAL } from "./protocol";
 
-const USER_BASE_URL = SONG_API_PORTOCAL();
+const SONG_BASE_URL = SONG_API_PORTOCAL();
 
-export const authCallbackApi = async (req: AuthCallBackRequest) => {
+export const getSongFeaturedApi = async () => {
   try {
-    const res: AxiosResponse<ApiResponse<AuthCallbackResponse>> =
-      await axiosInstance.post(USER_BASE_URL.GET_SONG, req);
+    const res: AxiosResponse<ApiResponse<SongLite[]>> = await axiosInstance.get(
+      SONG_BASE_URL.GET_SONG_FEATURED
+    );
+
+    return res.data.data;
+  } catch (error) {
+    errorApiHandler(error);
+  }
+};
+
+export const getSongMadeForYouApi = async () => {
+  try {
+    const res: AxiosResponse<ApiResponse<SongLite[]>> = await axiosInstance.get(
+      SONG_BASE_URL.GET_SONG_MADE_FOR_YOU
+    );
+
+    return res.data.data;
+  } catch (error) {
+    errorApiHandler(error);
+  }
+};
+
+export const getSongTrendingApi = async () => {
+  try {
+    const res: AxiosResponse<ApiResponse<SongLite[]>> = await axiosInstance.get(
+      SONG_BASE_URL.GET_SONG_TRENDING
+    );
+
     return res.data.data;
   } catch (error) {
     errorApiHandler(error);

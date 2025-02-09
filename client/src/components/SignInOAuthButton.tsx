@@ -17,9 +17,10 @@ const SignInOAuthButton = () => {
   return (
     <Button
       onClick={handleSignInWithGoogle}
-      className="w-full text-white bg-zinc-200 h-11"
+      className="w-full text-white bg-zinc-900/50 h-11 transition-all duration-300 hover:bg-zinc-600/70"
     >
       SignIn with Google
+      <img src="/google.png" alt="google" className="size-4 ml-2" />
     </Button>
   );
 };

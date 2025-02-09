@@ -18,6 +18,7 @@ const AlbumPage = () => {
   const navigate = useNavigate();
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
 
   const {
     data: album,
@@ -29,7 +30,6 @@ const AlbumPage = () => {
     if (!isAlbumLoading && album) {
       gsap.set(containerRef.current, {
         x: -100,
-
         opacity: 0,
       });
 
@@ -47,10 +47,10 @@ const AlbumPage = () => {
   }
 
   return (
-    <div className="h-full">
+    <ScrollArea className="h-full rounded-lg">
       {!isAlbumLoading && album ? (
-        <ScrollArea ref={containerRef} className="min-h-[100vh] rounded-md">
-          <div className="relative min-h-[100vh]">
+        <div ref={containerRef}>
+          <div className="relative">
             {/* bg gradient */}
             <div
               aria-hidden
@@ -58,7 +58,7 @@ const AlbumPage = () => {
             />
 
             {/* header */}
-            <div className="relative z-10">
+            <div className="relative z-10" ref={headerRef}>
               <div className="flex p-6 gap-5 pb-8">
                 <img
                   src={album.imageUrl}
@@ -102,9 +102,9 @@ const AlbumPage = () => {
                 </div>
 
                 {/* table body */}
-                <div className="px-6">
+                <div className={`px-6`}>
                   <div className="space-y-4 py-4">
-                    {album.songs.map((song, index) => (
+                    {[...album.songs, ...album.songs].map((song, index) => (
                       <div
                         key={song._id}
                         className="grid grid-cols-[16px_4fr_2fr_1fr] gap-4 px-3 py-2 text-sm text-zinc-400 border-b border-white/5 hover:bg-white/5 transition-all group cursor-pointer"
@@ -144,11 +144,11 @@ const AlbumPage = () => {
               </div>
             </div>
           </div>
-        </ScrollArea>
+        </div>
       ) : (
         <AlbumSkeleton />
       )}
-    </div>
+    </ScrollArea>
   );
 };
 

@@ -9,52 +9,62 @@ const imageDetails = [
   {
     artist: "Lany",
     album: "gg bb xx",
+    audio: "/songs/1.mp3",
     year: "2021",
   },
   {
     artist: "Tai verdes",
     album: "TV",
+    audio: "/songs/2.mp3",
     year: "2021",
   },
   {
     artist: "Lauv",
     album: "All 4 Nothing",
+    audio: "/songs/12.mp3",
     year: "2021",
   },
   {
     artist: "Clairo",
     album: "Sling",
+    audio: "/songs/4.mp3",
     year: "2021",
   },
   {
     artist: "Gareth.T",
     album: "Boyfriend Material",
+    audio: "/songs/5.mp3",
     year: "2021",
   },
   {
     artist: "Tessa Violet",
     album: "Crush",
+    audio: "/songs/6.mp3",
     year: "2018",
   },
   {
     artist: "Keshi",
     album: "Gabriel",
+    audio: "/songs/7.mp3",
     year: "2022",
   },
   {
     artist: "Billie Eilish",
     album: "Happier Than Ever",
+    audio: "/songs/8.mp3",
     year: "2021",
   },
 
   {
     artist: "Dua Lipa",
     album: "Don't Start Now",
+    audio: "/songs/9.mp3",
     year: "2019",
   },
   {
     artist: "Snoop Dogg",
     album: "Tha Blue Carpet Treatment",
+    audio: "/songs/10.mp3",
     year: "2006",
   },
 ];
@@ -81,14 +91,11 @@ const SearchPage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    setTimeout(() => {
-      window.scrollTo({
-        top: 1,
-        behavior: "smooth",
-      });
-    }, 100);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const currentActiveIndexRef = useRef<number>(1);
+  const prevIndexRef = useRef<number>(0);
 
+  const initializeScrollAnimations = () => {
     if (sliderRef.current) {
       gsap.fromTo(
         sliderRef.current,
@@ -103,6 +110,9 @@ const SearchPage = () => {
           ease: "elastic.out(1, 0.3)",
         }
       );
+      setTimeout(() => {
+        window.scrollTo(0, 10);
+      }, 100);
     }
 
     const slides = document.querySelectorAll(".slide");
@@ -110,6 +120,9 @@ const SearchPage = () => {
     const activesSlideImages = gsap.utils.toArray(".active-slide img");
 
     gsap.registerPlugin(ScrollTrigger);
+
+    let allIndex: number[] = [];
+    let allIndex2: number[] = [];
 
     slides.forEach((slide, index) => {
       const slideElement = slide as HTMLElement;
@@ -122,6 +135,7 @@ const SearchPage = () => {
         scrub: true,
         onUpdate: (self) => {
           const progress = self.progress;
+          const scrollingDown = self.direction > 0;
           const zIncrement = progress * 13500;
           const currentZ = initialZ + zIncrement;
 
@@ -148,13 +162,56 @@ const SearchPage = () => {
               ease: "power3.out",
             });
           }
+
+          const activeSlideDom = activesSlideImages[index] as HTMLElement;
+          const activeSlideOpacity = Number(activeSlideDom.style.opacity);
+
+          if (scrollingDown) {
+            if (activeSlideOpacity === 1) {
+              allIndex.push(index);
+            } else {
+              allIndex = allIndex.filter((i) => i !== index);
+            }
+            if (allIndex.length > 1) {
+              const maxIndex = Math.max(...allIndex);
+              currentActiveIndexRef.current = maxIndex;
+            }
+          } else {
+            if (activeSlideOpacity < 0.7 && activeSlideOpacity > 0.3) {
+              allIndex2.push(index);
+            } else {
+              allIndex2 = allIndex2.filter((i) => i !== index);
+            }
+            if (allIndex2.length > 1) {
+              const minIndex = Math.min(...allIndex2);
+              currentActiveIndexRef.current = minIndex;
+            }
+          }
+
+          if (
+            audioRef.current &&
+            prevIndexRef.current !== currentActiveIndexRef.current
+          ) {
+            prevIndexRef.current = currentActiveIndexRef.current;
+            audioRef.current.src =
+              imageDetails[currentActiveIndexRef.current].audio;
+            audioRef.current.play();
+            audioRef.current.loop = true;
+            audioRef.current.volume = 0.5;
+            audioRef.current.currentTime = 0;
+          }
         },
       });
     });
+  };
+
+  useEffect(() => {
+    initializeScrollAnimations();
   }, []);
 
   return (
     <div ref={containerRef} className="w-full h-[800vh]">
+      <audio ref={audioRef} className="hidden" />
       <div
         onClick={() => navigate(-1)}
         className="fixed top-5 left-5 size-10 text-white cursor-pointer hover:text-gray-400 hover:rotate-45 transition-all duration-150 z-50"

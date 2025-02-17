@@ -1,4 +1,4 @@
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useAlert } from "@/zustand/useAlert";
 import { XCircle } from "lucide-react";
 import { useCallback } from "react";
@@ -42,6 +42,7 @@ export function Alert() {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogTitle className="hidden" />
       <DialogContent className="border-none">
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div

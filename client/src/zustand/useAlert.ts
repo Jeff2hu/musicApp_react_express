@@ -4,7 +4,7 @@ interface AlertOption {
   open: boolean;
   title: string;
   description: string;
-  onOk?: () => void
+  onOk?: () => void;
 }
 
 interface AlertState {

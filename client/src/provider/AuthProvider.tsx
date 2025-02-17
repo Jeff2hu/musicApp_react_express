@@ -1,6 +1,5 @@
 import { checkAdminApi } from "@/api/admin/api";
 import { useAlert } from "@/zustand/useAlert";
-import { useToken } from "@/zustand/useToken";
 import { useAuth } from "@clerk/clerk-react";
 import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -12,8 +11,7 @@ interface AuthProviderProps {
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const { getToken } = useAuth();
 
-  const { setToken } = useToken();
-  const { setAlertOption } = useAlert();
+  const setAlertOption = useAlert((state) => state.setAlertOption);
 
   const [loading, setLoading] = useState(true);
 
@@ -22,8 +20,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       try {
         const token = await getToken();
         if (token) {
-          setToken(token);
-          await checkAdminApi();
+          await checkAdminApi(token);
         }
       } catch (error) {
         console.error("Error in AuthProvider", error);

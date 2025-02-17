@@ -7,7 +7,7 @@ import SignInOAuthButton from "./SignInOAuthButton";
 import { buttonVariants } from "./ui/button";
 
 const TopBar = () => {
-  const { isAdmin } = useAuthStore();
+  const isAdmin = useAuthStore((state) => state.isAdmin);
 
   return (
     <div className="flex items-center justify-between p-4 sticky top-0 bg-gradient-to-l from-zinc-950 to-black backdrop-blur-md z-10">

@@ -34,6 +34,7 @@ const LeftSideBar = () => {
         <div className="space-y-2">
           {links.map((link) => (
             <Link
+              key={link.path}
               to={link.path}
               className={cn(
                 buttonVariants({

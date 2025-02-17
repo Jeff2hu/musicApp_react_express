@@ -17,6 +17,7 @@ const MainLayout = () => {
         direction="horizontal"
         className="flex flex-1 h-full overflow-hidden p-2 gap-[1px]"
       >
+        <AudioPlayer />
         <ResizablePanel
           defaultSize={20}
           minSize={isMobile ? 0 : 10}
@@ -45,8 +46,6 @@ const MainLayout = () => {
           <FriendsActivity />
         </ResizablePanel>
       </ResizablePanelGroup>
-
-      <AudioPlayer />
     </div>
   );
 };

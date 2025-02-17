@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 
 export function Alert() {
   const { alertOption, setAlertOption } = useAlert();
+
   const { open, title, description, onOk } = alertOption;
 
   const onOpenChange = useCallback(

@@ -11,14 +11,20 @@ const ADMIN_BASE_URL = ADMIN_API_PORTOCAL();
  * Check admin
  * @returns AuthCallbackResponse
  */
-export const checkAdminApi = async () => {
-  const { setIsAdmin } = useAuthStore.getState();
+export const checkAdminApi = async (token: string) => {
+  const { setIsAdmin, setToken } = useAuthStore.getState();
   try {
     const res: AxiosResponse<ApiResponse<boolean>> = await axiosInstance.get(
-      ADMIN_BASE_URL.CHECK_ADMIN
+      ADMIN_BASE_URL.CHECK_ADMIN,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
     setIsAdmin(res.data.data);
+    setToken(token);
   } catch (error) {
     errorApiHandler(error);
   }

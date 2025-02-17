@@ -2,12 +2,19 @@ import { useGetSongFeatured } from "@/api/song/hook";
 import FeatureSkeleton from "@/components/skeletons/FeatureSkeleton";
 import { Song } from "@/type/song";
 import usePlayerStore from "@/zustand/usePlayerStore";
+import { useEffect } from "react";
 import PlayButton from "./PlayButton";
 
 const FeatureSection = () => {
   const { data: songFeatured, isLoading: isLoadingFeatured } =
     useGetSongFeatured();
-  const { checkIsCurrentSong, handlePlaySong } = usePlayerStore();
+  const { checkIsCurrentSong, handlePlaySong, initQueue } = usePlayerStore();
+
+  useEffect(() => {
+    if (songFeatured) {
+      initQueue([...(songFeatured as Song[])]);
+    }
+  }, [songFeatured, initQueue]);
 
   if (isLoadingFeatured || !songFeatured) return <FeatureSkeleton />;
 

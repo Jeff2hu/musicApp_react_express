@@ -2,17 +2,12 @@ import { useGetAlbumById } from "@/api/album/hook";
 import AlbumSkeleton from "@/components/skeletons/AlbumSkeleton";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { formatDuration } from "@/utils/formatDuration";
 import usePlayerStore from "@/zustand/usePlayerStore";
 import gsap from "gsap";
 import { Clock, Pause, Play } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
-const formatDuration = (duration: number) => {
-  const minutes = Math.floor(duration / 60);
-  const seconds = Math.floor(duration % 60);
-  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
-};
 
 const AlbumPage = () => {
   const { albumId } = useParams();

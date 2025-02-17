@@ -3,6 +3,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import AudioPlayer from "./components/AudioPlayer";
 import FriendsActivity from "./components/FriendsActivity";
@@ -10,7 +11,16 @@ import LeftSideBar from "./components/LeftSideBar";
 import PlayBackControl from "./components/PlayBackControl";
 
 const MainLayout = () => {
-  const isMobile = false;
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", checkIsMobile);
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
 
   return (
     <div className="h-screen bg-black text-white flex flex-col">
@@ -27,22 +37,26 @@ const MainLayout = () => {
           <LeftSideBar />
         </ResizablePanel>
 
-        <ResizableHandle className="w-1 bg-black opacity-50 rounded-lg transition-colors cursor-col-resize" />
+        <ResizableHandle className="w-2 bg-black opacity-50 rounded-lg transition-colors cursor-col-resize" />
 
         <ResizablePanel defaultSize={isMobile ? 80 : 60} className="h-full">
           <Outlet />
         </ResizablePanel>
 
-        <ResizableHandle className="w-1 bg-black opacity-50 rounded-lg transition-colors cursor-col-resize" />
+        {!isMobile && (
+          <>
+            <ResizableHandle className="w-2 bg-black opacity-50 rounded-lg transition-colors cursor-col-resize" />
 
-        <ResizablePanel
-          defaultSize={20}
-          minSize={0}
-          maxSize={25}
-          collapsedSize={0}
-        >
-          <FriendsActivity />
-        </ResizablePanel>
+            <ResizablePanel
+              defaultSize={20}
+              minSize={0}
+              maxSize={25}
+              collapsedSize={0}
+            >
+              <FriendsActivity />
+            </ResizablePanel>
+          </>
+        )}
       </ResizablePanelGroup>
 
       <PlayBackControl />

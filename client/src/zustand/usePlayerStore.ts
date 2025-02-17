@@ -1,4 +1,4 @@
-import { Song } from "@/type/song";
+import { Song, SongLite } from "@/type/song";
 import { create } from "zustand";
 
 interface PlayerStore {
@@ -6,6 +6,7 @@ interface PlayerStore {
   isPlaying: boolean;
   queue: Song[];
   currentIndex: number;
+  audioRef: React.RefObject<HTMLAudioElement> | null;
 
   initQueue: (songs: Song[]) => void;
   playAlbum: (songs: Song[], startIndex?: number) => void;
@@ -13,13 +14,18 @@ interface PlayerStore {
   togglePlay: () => void;
   playNext: () => void;
   playPrev: () => void;
+  setAudioRef: (ref: React.RefObject<HTMLAudioElement>) => void;
+  checkIsCurrentSong: (song: Song | SongLite) => boolean;
+  handlePlaySong: (song: SongLite) => void;
+  setIsPlaying: (isPlaying: boolean) => void;
 }
 
-const usePlayerStore = create<PlayerStore>((set) => ({
+const usePlayerStore = create<PlayerStore>((set, get) => ({
   currentSong: null,
   isPlaying: false,
   queue: [],
   currentIndex: -1,
+  audioRef: null,
   initQueue: (songs) => {
     set((state) => ({
       queue: songs,
@@ -52,6 +58,8 @@ const usePlayerStore = create<PlayerStore>((set) => ({
       };
     });
   },
+  setIsPlaying: (isPlaying: boolean) => set({ isPlaying }),
+  setAudioRef: (ref) => set({ audioRef: ref }),
   togglePlay: () => set((state) => ({ isPlaying: !state.isPlaying })),
   playNext: () =>
     set((state) => {
@@ -85,6 +93,13 @@ const usePlayerStore = create<PlayerStore>((set) => ({
         };
       }
     }),
+  checkIsCurrentSong: (song) => {
+    return get().currentSong?._id === song._id;
+  },
+  handlePlaySong: (song) => {
+    if (get().checkIsCurrentSong(song)) get().togglePlay();
+    else get().setCurrentSong(song as Song);
+  },
 }));
 
 export default usePlayerStore;

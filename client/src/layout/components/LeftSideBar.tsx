@@ -28,7 +28,7 @@ const LeftSideBar = () => {
   const { data: albums, isLoading: isAlbumsLoading } = useGetAlbums();
 
   return (
-    <div className="h-[calc(100vh-120px)] flex flex-col gap-2">
+    <div className="h-full flex flex-col gap-2">
       {/* Navigation Menu */}
       <div className="bg-zinc-900 rounded-lg p-4">
         <div className="space-y-2">

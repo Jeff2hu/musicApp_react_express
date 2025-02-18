@@ -2,7 +2,7 @@ import Song from "../model/song.model.js";
 
 export const getAllSongs = async () => {
   try {
-    const songs = await Song.find({ createdAt: -1 });
+    const songs = await Song.find().sort({ createdAt: -1 });
     return songs;
   } catch (error) {
     throw error;

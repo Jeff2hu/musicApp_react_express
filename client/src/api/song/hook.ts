@@ -2,11 +2,19 @@ import { useQuery } from "@tanstack/react-query";
 import {
   getSongFeaturedApi,
   getSongMadeForYouApi,
+  getSongsApi,
   getSongTrendingApi,
 } from "./api";
 import { SONG_API_PORTOCAL } from "./protocol";
 
 const SONG_BASE_URL = SONG_API_PORTOCAL();
+
+export const useGetSongs = () => {
+  return useQuery({
+    queryKey: [SONG_BASE_URL.BASE_URL],
+    queryFn: getSongsApi,
+  });
+};
 
 export const useGetSongFeatured = () => {
   return useQuery({

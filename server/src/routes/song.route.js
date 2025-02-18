@@ -5,14 +5,11 @@ import {
   getMadeForYouSongController,
   getTrendingSongController,
 } from "../controller/song.controller.js";
-import {
-  adminMiddleware,
-  protectMiddleware,
-} from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-router.get("/", protectMiddleware, adminMiddleware, getAllSongsController);
+// , protectMiddleware, adminMiddleware
+router.get("/", getAllSongsController);
 router.get("/featured", getFeaturedSongController);
 router.get("/madeForYou", getMadeForYouSongController);
 router.get("/trending", getTrendingSongController);

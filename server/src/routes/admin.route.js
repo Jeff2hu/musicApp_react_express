@@ -6,14 +6,10 @@ import {
   deleteAlbumController,
   deleteSongController,
 } from "../controller/admin.controller.js";
-import {
-  adminMiddleware,
-  protectMiddleware,
-} from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-router.use(protectMiddleware, adminMiddleware);
+// router.use(protectMiddleware, adminMiddleware);
 
 router.get("/check", checkAdminController);
 

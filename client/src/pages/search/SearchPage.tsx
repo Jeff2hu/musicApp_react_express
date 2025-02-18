@@ -1,8 +1,9 @@
 import { cn } from "@/lib/utils";
 import gsap from "gsap";
+import ScrollToPlugin from "gsap/ScrollToPlugin";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { ArrowBigLeft } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { ArrowBigLeft, Volume2, VolumeOff } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const imageDetails = [
@@ -88,12 +89,24 @@ const mapRange = (
 const SearchPage = () => {
   const navigate = useNavigate();
 
+  const [isMuted, setIsMuted] = useState(false);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const currentActiveIndexRef = useRef<number>(1);
   const prevIndexRef = useRef<number>(0);
+
+  const playAudioHandler = (index: number) => {
+    if (audioRef.current) {
+      audioRef.current.src = imageDetails[index].audio;
+      audioRef.current.loop = true;
+      audioRef.current.volume = 0.5;
+      audioRef.current.currentTime = 0;
+      audioRef.current.play();
+    }
+  };
 
   const initializeScrollAnimations = () => {
     if (sliderRef.current) {
@@ -111,15 +124,47 @@ const SearchPage = () => {
         }
       );
       setTimeout(() => {
-        window.scrollTo(0, 10);
+        window.scrollTo({
+          top: 5,
+          behavior: "smooth",
+        });
+        playAudioHandler(currentActiveIndexRef.current);
       }, 100);
     }
 
     const slides = document.querySelectorAll(".slide");
-
     const activesSlideImages = gsap.utils.toArray(".active-slide img");
+    const scrollDistance = 750 - currentActiveIndexRef.current * 30;
 
-    gsap.registerPlugin(ScrollTrigger);
+    let isScrolling = false;
+    let isAnimating = false;
+
+    containerRef.current?.addEventListener("wheel", (e) => {
+      e.preventDefault();
+
+      if (isScrolling || isAnimating) return;
+
+      const direction = e.deltaY > 0 ? 1 : -1;
+      const currentScroll = window.scrollY;
+      const nextScroll = currentScroll + direction * scrollDistance;
+
+      isScrolling = true;
+      isAnimating = true;
+
+      gsap.to(window, {
+        scrollTo: nextScroll,
+        duration: 0,
+        ease: "power3.inOut",
+        onComplete: () => {
+          isScrolling = false;
+          setTimeout(() => {
+            isAnimating = false;
+          }, 300);
+        },
+      });
+    });
+
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
     let allIndex: number[] = [];
     let allIndex2: number[] = [];
@@ -193,12 +238,7 @@ const SearchPage = () => {
             prevIndexRef.current !== currentActiveIndexRef.current
           ) {
             prevIndexRef.current = currentActiveIndexRef.current;
-            audioRef.current.src =
-              imageDetails[currentActiveIndexRef.current].audio;
-            audioRef.current.play();
-            audioRef.current.loop = true;
-            audioRef.current.volume = 0.5;
-            audioRef.current.currentTime = 0;
+            playAudioHandler(currentActiveIndexRef.current);
           }
         },
       });
@@ -206,17 +246,35 @@ const SearchPage = () => {
   };
 
   useEffect(() => {
-    initializeScrollAnimations();
+    setTimeout(() => {
+      initializeScrollAnimations();
+    }, 100);
   }, []);
 
   return (
     <div ref={containerRef} className="w-full h-[800vh]">
       <audio ref={audioRef} className="hidden" />
       <div
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/")}
         className="fixed top-5 left-5 size-10 text-white cursor-pointer hover:text-gray-400 hover:rotate-45 transition-all duration-150 z-50"
       >
         <ArrowBigLeft className="size-10" />
+      </div>
+      <div
+        onClick={() => {
+          if (audioRef.current) {
+            const muted = audioRef.current.muted;
+            audioRef.current.muted = !muted;
+            setIsMuted(!muted);
+          }
+        }}
+        className="fixed top-5 right-5 size-10 text-white cursor-pointer hover:text-gray-400 transition-all duration-150 z-50"
+      >
+        {isMuted ? (
+          <VolumeOff className="size-9 text-red-400" />
+        ) : (
+          <Volume2 className="size-9" />
+        )}
       </div>
 
       <div className="active-slide fixed top-0 left-0 w-full h-full overflow-hidden bg-black opacity-35 z-[-1]">

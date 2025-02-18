@@ -1,7 +1,8 @@
 import { useGetAllUsers } from "@/api/user/hook";
+import Loading from "@/components/Loading";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Loader2, Music, Users } from "lucide-react";
+import { Music, Users } from "lucide-react";
 
 const FriendsActivity = () => {
   const { data: users, isLoading } = useGetAllUsers();
@@ -19,9 +20,7 @@ const FriendsActivity = () => {
 
       <ScrollArea className="flex-1">
         {isLoading ? (
-          <div className="flex justify-center items-center h-full">
-            <Loader2 className="size-5 animate-spin text-zinc-400 mt-4 mx-auto" />
-          </div>
+          <Loading />
         ) : (
           <div className="p-4 space-y-4">
             {users?.map((user) => (

@@ -4,8 +4,8 @@ const addSongSchema = z
   .object({
     title: z.string().min(1, "Title is required"),
     artist: z.string().min(1, "Artist is required"),
-    duration: z.number().min(1, "Duration is required"),
-    album: z.string().min(1, "Album is required").nullable(),
+    duration: z.string().min(1, "Duration is required"),
+    albumId: z.string().min(1, "Album is required").nullable(),
     audioFile: z.instanceof(File).nullable(),
     imageFile: z.instanceof(File).nullable(),
   })
@@ -39,8 +39,8 @@ export type AddSongFormData = z.infer<typeof addSongSchema>;
 export const defaultAddSongFormData: AddSongFormData = {
   title: "",
   artist: "",
-  duration: 0,
-  album: "",
+  duration: "",
+  albumId: null,
   audioFile: null,
   imageFile: null,
 };

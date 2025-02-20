@@ -5,7 +5,7 @@ import Loading from "@/components/Loading";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuthStore } from "@/zustand/useAuthStore";
 import { Album, Music } from "lucide-react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import HeaderIcon from "../../components/HeaderIcon";
 import AlbumsTabContent from "./components/AlbumsTabContent";
 import SongsTabContent from "./components/SongsTabContent";
@@ -19,8 +19,6 @@ const AdminPage = () => {
   const { isLoading: isStatsLoading } = useGetStats();
   const { isLoading: isSongsLoading } = useGetSongs();
   const { isLoading: isAlbumsLoading } = useGetAlbums();
-
-  if (!isAdmin) return <Navigate to="/" />;
 
   return (
     <div className="min-h-screen flex flex-col gap-10 bg-gradient-to-b from-zinc-900 via-zinc-800/70 to-black text-zinc-100 p-8">

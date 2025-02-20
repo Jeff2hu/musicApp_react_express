@@ -5,6 +5,7 @@ import {
   createSongController,
   deleteAlbumController,
   deleteSongController,
+  updateSongController,
 } from "../controller/admin.controller.js";
 
 const router = express.Router();
@@ -14,6 +15,7 @@ const router = express.Router();
 router.get("/check", checkAdminController);
 
 router.post("/song", createSongController);
+router.put("/song/:id", updateSongController);
 router.delete("/song/:id", deleteSongController);
 
 router.post("/album", createAlbumController);

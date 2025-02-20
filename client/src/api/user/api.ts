@@ -18,7 +18,7 @@ export const authCallbackApi = async (req: AuthCallBackRequest) => {
       await axiosInstance.post(USER_BASE_URL.AUTH_CALLBACK, req);
     return res.data.data;
   } catch (error) {
-    errorApiHandler(error);
+    throw errorApiHandler(error);
   }
 };
 
@@ -33,6 +33,6 @@ export const getAllUsersApi = async () => {
     );
     return res.data.data;
   } catch (error) {
-    errorApiHandler(error);
+    throw errorApiHandler(error);
   }
 };

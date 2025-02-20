@@ -42,6 +42,35 @@ export const createSong = async (req) => {
   }
 };
 
+export const updateSong = async (id, req) => {
+  try {
+    const { title, artist, albumId, duration } = req.body;
+    const { audioFile, imageFile } = req.files;
+
+    const song = await Song.findById(id);
+
+    if (!song) {
+      throw new Error("Song not found");
+    }
+
+    const audioUrl = await uploadToCloudinary(audioFile);
+    const imageUrl = await uploadToCloudinary(imageFile);
+
+    const updatedSong = await Song.findByIdAndUpdate(id, {
+      title,
+      artist,
+      audioUrl,
+      imageUrl,
+      duration,
+      albumId: albumId || null,
+    });
+
+    return updatedSong;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const deleteSong = async (id) => {
   try {
     const song = await Song.findById(id);

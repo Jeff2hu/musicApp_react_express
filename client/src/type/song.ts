@@ -17,3 +17,16 @@ export type SongLite = {
   imageUrl: string;
   audioUrl: string;
 };
+
+export type CreateSongRequest = {
+  title: string;
+  artist: string;
+  imageFile: File;
+  audioFile: File;
+  albumId: string | null;
+  duration: string;
+};
+
+export type UpdateSongRequest = CreateSongRequest & {
+  id: string;
+};

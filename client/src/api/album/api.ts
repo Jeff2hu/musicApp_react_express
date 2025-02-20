@@ -28,7 +28,7 @@ export const getAlbumsApi = async ({ signal }: { signal: AbortSignal }) => {
     setAlbums(res.data.data);
     return res.data.data;
   } catch (error) {
-    errorApiHandler(error);
+    throw errorApiHandler(error);
   }
 };
 
@@ -54,6 +54,6 @@ export const getAlbumByIdApi = async ({
     );
     return res.data.data;
   } catch (error) {
-    errorApiHandler(error);
+    throw errorApiHandler(error);
   }
 };

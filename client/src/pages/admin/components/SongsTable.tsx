@@ -9,13 +9,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { SongLite } from "@/type/song";
 import { useAlert } from "@/zustand/useAlert";
 import useMusicStore from "@/zustand/useMusicStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { Calendar, Edit, Trash } from "lucide-react";
 import toast from "react-hot-toast";
 
-const SongsTable = () => {
+interface SongsTableProps {
+  onClickUpdateSong: (song: SongLite) => void;
+}
+
+const SongsTable = ({ onClickUpdateSong }: SongsTableProps) => {
   const queryClient = useQueryClient();
 
   const { setAlertOption } = useAlert();
@@ -85,7 +90,11 @@ const SongsTable = () => {
                 >
                   <Trash className="size-4" />
                 </Button>
-                <Button variant="ghost" size="icon">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => onClickUpdateSong(song)}
+                >
                   <Edit className="size-4" />
                 </Button>
               </div>

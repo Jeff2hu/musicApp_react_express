@@ -21,7 +21,7 @@ export const getSongsApi = async ({ signal }: { signal: AbortSignal }) => {
     setSongs(res.data.data);
     return res.data.data;
   } catch (error) {
-    errorApiHandler(error);
+    throw errorApiHandler(error);
   }
 };
 
@@ -32,7 +32,7 @@ export const deleteSongApi = async ({ id }: { id: string }) => {
 
     return res.data.data;
   } catch (error) {
-    errorApiHandler(error);
+    throw errorApiHandler(error);
   }
 };
 
@@ -51,7 +51,7 @@ export const getSongFeaturedApi = async ({
 
     return res.data.data;
   } catch (error) {
-    errorApiHandler(error);
+    throw errorApiHandler(error);
   }
 };
 
@@ -70,7 +70,7 @@ export const getSongMadeForYouApi = async ({
 
     return res.data.data;
   } catch (error) {
-    errorApiHandler(error);
+    throw errorApiHandler(error);
   }
 };
 
@@ -89,6 +89,6 @@ export const getSongTrendingApi = async ({
 
     return res.data.data;
   } catch (error) {
-    errorApiHandler(error);
+    throw errorApiHandler(error);
   }
 };

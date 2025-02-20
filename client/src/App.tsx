@@ -23,7 +23,7 @@ function App() {
         }
       />
       <Route path="/auth-callback" element={<AuthCallbackPage />} />
-      {isAdmin && <Route path="/admin" element={<AdminPage />} />}
+      <Route path="/admin" element={<AdminPage />} />
 
       <Route element={<MainLayout />}>
         <Route path="/" element={<HomePage />} />

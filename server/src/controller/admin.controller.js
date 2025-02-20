@@ -3,6 +3,7 @@ import {
   createSong,
   deleteAlbum,
   deleteSong,
+  updateSong,
 } from "../service/admin.service.js";
 
 export const checkAdminController = async (req, res, next) => {
@@ -15,9 +16,9 @@ export const checkAdminController = async (req, res, next) => {
 
 export const createSongController = async (req, res, next) => {
   try {
-    const { title, artist, albumId, duration } = req.body;
+    const { title, artist, duration } = req.body;
 
-    if (!title || !artist || !albumId || !duration) {
+    if (!title || !artist || !duration) {
       res.status(400).json({ message: "Invalid request" });
       return;
     }
@@ -30,6 +31,34 @@ export const createSongController = async (req, res, next) => {
     const song = await createSong(req);
 
     res.status(200).json({ message: "Song created successfully", data: song });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const updateSongController = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { title, artist, duration } = req.body;
+
+    if (!id) {
+      res.status(400).json({ message: "Song id is required" });
+      return;
+    }
+
+    if (!title || !artist || !duration) {
+      res.status(400).json({ message: "Invalid request" });
+      return;
+    }
+
+    if (!req.files || !req.files.audioFile || !req.files.imageFile) {
+      res.status(400).json({ message: "AudioFile and ImageFile are required" });
+      return;
+    }
+
+    const song = await updateSong(id, req);
+
+    res.status(200).json({ message: "Song updated successfully", data: song });
   } catch (err) {
     next(err);
   }

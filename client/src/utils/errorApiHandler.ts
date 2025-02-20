@@ -10,10 +10,11 @@ const errorApiHandler = (error: unknown) => {
 
     setAlertOption({
       open: true,
-      title: "API錯誤 請通知開發者",
-      description: error.message,
+      title: `API錯誤 請通知開發者 (${error.status})`,
+      description: error.response?.data.message || "Something went wrong",
     });
   }
+  return Promise.reject(error);
 };
 
 export default errorApiHandler;

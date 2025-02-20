@@ -21,6 +21,6 @@ export const getStatsApi = async ({ signal }: { signal: AbortSignal }) => {
     setStats(res.data.data);
     return res.data.data;
   } catch (error) {
-    errorApiHandler(error);
+    throw errorApiHandler(error);
   }
 };

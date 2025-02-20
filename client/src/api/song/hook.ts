@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
+  deleteSongApi,
   getSongFeaturedApi,
   getSongMadeForYouApi,
   getSongsApi,
@@ -13,6 +14,13 @@ export const useGetSongs = () => {
   return useQuery({
     queryKey: [SONG_BASE_URL.BASE_URL],
     queryFn: getSongsApi,
+  });
+};
+
+export const useDeleteSong = (successCallback: () => void) => {
+  return useMutation({
+    mutationFn: deleteSongApi,
+    onSuccess: successCallback,
   });
 };
 

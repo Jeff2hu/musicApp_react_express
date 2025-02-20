@@ -1,4 +1,5 @@
 import {
+  deleteSong,
   getAllSongs,
   getFeaturedSongs,
   getMadeForYouSongs,
@@ -12,6 +13,22 @@ export const getAllSongsController = async (req, res) => {
     res
       .status(200)
       .json({ message: "Songs fetched successfully", data: songs });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const deleteSongController = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ message: "Song ID is required" });
+    }
+
+    await deleteSong(id);
+
+    res.status(200).json({ message: "Song deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }

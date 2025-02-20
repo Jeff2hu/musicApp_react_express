@@ -25,6 +25,17 @@ export const getSongsApi = async ({ signal }: { signal: AbortSignal }) => {
   }
 };
 
+export const deleteSongApi = async ({ id }: { id: string }) => {
+  try {
+    const res: AxiosResponse<ApiResponse<SongLite[]>> =
+      await axiosInstance.delete(SONG_BASE_URL.BASE_URL + "/" + id);
+
+    return res.data.data;
+  } catch (error) {
+    errorApiHandler(error);
+  }
+};
+
 export const getSongFeaturedApi = async ({
   signal,
 }: {

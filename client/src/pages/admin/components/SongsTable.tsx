@@ -1,3 +1,5 @@
+import { useDeleteSong } from "@/api/song/hook";
+import { SONG_API_PORTOCAL } from "@/api/song/protocol";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -7,11 +9,38 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useAlert } from "@/zustand/useAlert";
 import useMusicStore from "@/zustand/useMusicStore";
+import { useQueryClient } from "@tanstack/react-query";
 import { Calendar, Edit, Trash } from "lucide-react";
+import toast from "react-hot-toast";
 
 const SongsTable = () => {
+  const queryClient = useQueryClient();
+
+  const { setAlertOption } = useAlert();
   const songs = useMusicStore((state) => state.songs);
+  const { mutate: deleteSong } = useDeleteSong(deleteSongSuccess);
+
+  const deleteSongHandler = (id: string) => {
+    deleteSong({ id });
+  };
+
+  const deleteSongConfirmation = (id: string) => {
+    setAlertOption({
+      open: true,
+      title: "Delete Song",
+      description: "Are you sure you want to delete this song?",
+      onOk: () => {
+        deleteSongHandler(id);
+      },
+    });
+  };
+
+  function deleteSongSuccess() {
+    queryClient.invalidateQueries({ queryKey: [SONG_API_PORTOCAL().BASE_URL] });
+    toast.success("Song deleted successfully");
+  }
 
   return (
     <Table className="w-full">
@@ -52,6 +81,7 @@ const SongsTable = () => {
                   variant="ghost"
                   size="sm"
                   className="text-red-400 hover:text-red-300 hover:bg-red-400/10"
+                  onClick={() => deleteSongConfirmation(song._id)}
                 >
                   <Trash className="size-4" />
                 </Button>

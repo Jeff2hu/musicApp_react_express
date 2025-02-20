@@ -1,4 +1,10 @@
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useAlert } from "@/zustand/useAlert";
 import { XCircle } from "lucide-react";
 import { useCallback } from "react";
@@ -42,24 +48,35 @@ export function Alert() {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogTitle className="hidden" />
-      <DialogContent className="border-none">
+      <DialogTrigger asChild className="hidden"></DialogTrigger>
+      <DialogContent className="border-none p-0 bg-transparent shadow-none">
+        <DialogHeader>
+          <DialogTitle className="hidden" />
+        </DialogHeader>
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div
-            className="fixed inset-0 bg-black/30"
+            className="fixed inset-0 bg-black/20 dark:bg-black/40 backdrop-blur-sm"
             onClick={() => onOpenChange(false)}
           />
-          <div className="relative bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-4">
-            <div className="flex items-start gap-3">
-              <XCircle className="h-6 w-6 text-red-600 flex-shrink-0" />
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
-                <p className="mt-2 text-base text-gray-500">{description}</p>
+          <div className="relative bg-white/90 dark:bg-zinc-800/90 backdrop-blur-md rounded-xl shadow-lg dark:shadow-zinc-950/50 border border-gray-200/20 dark:border-white/10 w-full max-w-md mx-4 overflow-hidden">
+            <div className="p-6">
+              <div className="flex items-start gap-4">
+                <div className="p-2 rounded-full bg-red-100/80 dark:bg-red-500/10">
+                  <XCircle className="h-6 w-6 text-red-600 dark:text-red-400" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-50">
+                    {title}
+                  </h3>
+                  <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                    {description}
+                  </p>
+                </div>
               </div>
-            </div>
 
-            <div className="mt-6 flex justify-end gap-2">
-              <ButtonArea />
+              <div className="mt-6 flex justify-end gap-3">
+                <ButtonArea />
+              </div>
             </div>
           </div>
         </div>

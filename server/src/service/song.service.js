@@ -9,6 +9,14 @@ export const getAllSongs = async () => {
   }
 };
 
+export const deleteSong = async (id) => {
+  try {
+    await Song.findByIdAndDelete(id);
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getFeaturedSongs = async () => {
   try {
     const songs = await Song.aggregate([

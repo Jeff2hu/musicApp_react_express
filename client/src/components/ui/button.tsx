@@ -5,7 +5,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -20,9 +20,9 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         gradient_blue:
-          "bg-gradient-to-r from-blue-700 to-blue-500 text-white shadow-lg shadow-blue-200 hover:from-blue-800 hover:to-blue-600",
+          "bg-gradient-to-r from-blue-600/80 to-blue-500/80 text-white/90 shadow-sm hover:shadow-md shadow-blue-500/10 dark:shadow-blue-900/20 hover:from-blue-700/80 hover:to-blue-600/80 transition-all duration-200",
         gradient_red:
-          "bg-gradient-to-r from-red-700 to-red-500 text-white shadow-lg shadow-red-200 hover:from-red-800 hover:to-red-600",
+          "bg-gradient-to-r from-red-500/80 to-rose-400/80 text-white/90 shadow-sm hover:shadow-md shadow-red-500/10 dark:shadow-red-900/20 hover:from-red-600/80 hover:to-rose-500/80 transition-all duration-200",
       },
       size: {
         default: "h-9 px-4 py-2",

@@ -27,6 +27,11 @@ export type CreateSongRequest = {
   duration: string;
 };
 
-export type UpdateSongRequest = CreateSongRequest & {
+export type UpdateSongRequest = Omit<
+  CreateSongRequest,
+  "imageFile" | "audioFile"
+> & {
   id: string;
+  imageFile: File | string;
+  audioFile: File | string;
 };

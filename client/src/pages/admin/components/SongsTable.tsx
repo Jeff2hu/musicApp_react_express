@@ -1,5 +1,7 @@
 import { useDeleteSong } from "@/api/song/hook";
 import { SONG_API_PORTOCAL } from "@/api/song/protocol";
+import { STATS_API_PORTOCAL } from "@/api/stats/protocol";
+import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -9,15 +11,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { SongLite } from "@/type/song";
+import { Song } from "@/type/song";
 import { useAlert } from "@/zustand/useAlert";
 import useMusicStore from "@/zustand/useMusicStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { Calendar, Edit, Trash } from "lucide-react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 interface SongsTableProps {
-  onClickUpdateSong: (song: SongLite) => void;
+  onClickUpdateSong: (song: Song) => void;
 }
 
 const SongsTable = ({ onClickUpdateSong }: SongsTableProps) => {
@@ -25,9 +28,13 @@ const SongsTable = ({ onClickUpdateSong }: SongsTableProps) => {
 
   const { setAlertOption } = useAlert();
   const songs = useMusicStore((state) => state.songs);
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const { mutate: deleteSong } = useDeleteSong(deleteSongSuccess);
 
   const deleteSongHandler = (id: string) => {
+    setIsLoading(true);
     deleteSong({ id });
   };
 
@@ -44,7 +51,11 @@ const SongsTable = ({ onClickUpdateSong }: SongsTableProps) => {
 
   function deleteSongSuccess() {
     queryClient.invalidateQueries({ queryKey: [SONG_API_PORTOCAL().BASE_URL] });
+    queryClient.invalidateQueries({
+      queryKey: [STATS_API_PORTOCAL().BASE_URL],
+    });
     toast.success("Song deleted successfully");
+    setIsLoading(false);
   }
 
   return (
@@ -60,47 +71,53 @@ const SongsTable = ({ onClickUpdateSong }: SongsTableProps) => {
       </TableHeader>
 
       <TableBody>
-        {songs.map((song) => (
-          <TableRow
-            key={song._id}
-            className="hover:bg-zinc-800/50 cursor-pointer"
-          >
-            <TableCell className="font-medium">
-              <img
-                src={song.imageUrl}
-                alt={song.title}
-                className="size-10 rounded object-cover"
-              />
-            </TableCell>
-            <TableCell className="font-medium">{song.title}</TableCell>
-            <TableCell>{song.artist}</TableCell>
-            <TableCell>
-              <span className="inline-flex items-center gap-1 text-zinc-400">
-                <Calendar className="size-4" />
-                {song.createdAt.split("T")[0]}
-              </span>
-            </TableCell>
-            <TableCell className="text-right">
-              <div className="flex gap-2 justify-end">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-red-400 hover:text-red-300 hover:bg-red-400/10"
-                  onClick={() => deleteSongConfirmation(song._id)}
-                >
-                  <Trash className="size-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => onClickUpdateSong(song)}
-                >
-                  <Edit className="size-4" />
-                </Button>
-              </div>
-            </TableCell>
+        {isLoading ? (
+          <TableRow>
+            <Loading />
           </TableRow>
-        ))}
+        ) : (
+          songs.map((song) => (
+            <TableRow
+              key={song._id}
+              className="hover:bg-zinc-800/50 cursor-pointer"
+            >
+              <TableCell className="font-medium">
+                <img
+                  src={song.imageUrl}
+                  alt={song.title}
+                  className="size-10 rounded object-cover"
+                />
+              </TableCell>
+              <TableCell className="font-medium">{song.title}</TableCell>
+              <TableCell>{song.artist}</TableCell>
+              <TableCell>
+                <span className="inline-flex items-center gap-1 text-zinc-400">
+                  <Calendar className="size-4" />
+                  {song.createdAt.split("T")[0]}
+                </span>
+              </TableCell>
+              <TableCell className="text-right">
+                <div className="flex gap-2 justify-end">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-red-400 hover:text-red-300 hover:bg-red-400/10"
+                    onClick={() => deleteSongConfirmation(song._id)}
+                  >
+                    <Trash className="size-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => onClickUpdateSong(song)}
+                  >
+                    <Edit className="size-4" />
+                  </Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))
+        )}
       </TableBody>
     </Table>
   );

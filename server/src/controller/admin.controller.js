@@ -51,7 +51,10 @@ export const updateSongController = async (req, res, next) => {
       return;
     }
 
-    if (!req.files || !req.files.audioFile || !req.files.imageFile) {
+    if (
+      (!req.files?.audioFile && !req.body?.audioFile) ||
+      (!req.files?.imageFile && !req.body?.imageFile)
+    ) {
       res.status(400).json({ message: "AudioFile and ImageFile are required" });
       return;
     }

@@ -41,6 +41,7 @@ app.use("/api/album", albumRoutes);
 app.use("/api/stats", statsRoutes);
 
 app.use((err, req, res, next) => {
+  console.log(err);
   res.status(500).json({ message: err.message });
 });
 

@@ -1,8 +1,10 @@
 import { useCreateSong, useUpdateSong } from "@/api/admin/hook";
 import { ALBUM_API_PORTOCAL } from "@/api/album/protocol";
 import { SONG_API_PORTOCAL } from "@/api/song/protocol";
+import { STATS_API_PORTOCAL } from "@/api/stats/protocol";
 import InputField from "@/components/hookForm/InputField";
 import SelectField from "@/components/hookForm/SelectField";
+import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,10 +15,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { SongLite } from "@/type/song";
-import addSongSchema, {
-  AddSongFormData,
+import { Song } from "@/type/song";
+import songSchema, {
   defaultAddSongFormData,
+  SongFormData,
 } from "@/zod/songSchema";
 import useMusicStore from "@/zustand/useMusicStore";
 import { DevTool } from "@hookform/devtools";
@@ -28,12 +30,12 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 interface AddSongDialogProps {
-  mode: "add" | "edit";
-  setMode: (mode: "add" | "edit") => void;
+  mode: "add" | "update";
+  setMode: (mode: "add" | "update") => void;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  song: SongLite | null;
-  setSong: (song: SongLite | null) => void;
+  song: Song | null;
+  setSong: (song: Song | null) => void;
 }
 
 const AddSongDialog = ({
@@ -50,11 +52,14 @@ const AddSongDialog = ({
 
   const audioFileRef = useRef<HTMLInputElement>(null);
   const imageFileRef = useRef<HTMLInputElement>(null);
+  const dialogContentRef = useRef<HTMLDivElement>(null);
 
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
-  const { mutate: createSongMutation } = useCreateSong(createSongSuccess);
-  const { mutate: updateSongMutation } = useUpdateSong(createSongSuccess);
+  const { mutate: createSongMutation, isPending: isCreatingSongPending } =
+    useCreateSong(createSongSuccess);
+  const { mutate: updateSongMutation, isPending: isUpdatingSongPending } =
+    useUpdateSong(createSongSuccess);
 
   const {
     register,
@@ -64,15 +69,21 @@ const AddSongDialog = ({
     reset,
     control,
     formState: { errors },
-  } = useForm<AddSongFormData>({
-    resolver: zodResolver(addSongSchema),
-    defaultValues: defaultAddSongFormData,
+  } = useForm<SongFormData>({
+    resolver: zodResolver(songSchema),
   });
 
   const audioFile = watch("audioFile");
   const imageFile = watch("imageFile");
 
-  const onSubmit: SubmitHandler<AddSongFormData> = (data) => {
+  const onSubmit: SubmitHandler<SongFormData> = (data) => {
+    if (dialogContentRef.current) {
+      dialogContentRef.current.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+
     if (mode === "add") {
       createSongMutation({
         ...data,
@@ -80,23 +91,28 @@ const AddSongDialog = ({
         audioFile: data.audioFile as File,
       });
     } else {
-      if (!song) return;
+      if (!song || !data.imageFile || !data.audioFile) return;
 
       updateSongMutation({
         ...data,
         id: song._id,
-        imageFile: data.imageFile as File,
-        audioFile: data.audioFile as File,
+        imageFile: data.imageFile,
+        audioFile: data.audioFile,
       });
     }
   };
 
   // 修改 onOpenChange 處理
-  const handleOpenChange = (newOpen: boolean) => {
+  const handleOpenChange = (newOpen: boolean, forceReset = false) => {
+    if ((isCreatingSongPending || isUpdatingSongPending) && !forceReset) {
+      return;
+    }
+
     if (!newOpen) {
       reset(defaultAddSongFormData);
       setImageUrl(null);
     }
+
     onOpenChange(newOpen);
   };
 
@@ -105,14 +121,29 @@ const AddSongDialog = ({
     queryClient.invalidateQueries({
       queryKey: [ALBUM_API_PORTOCAL().GET_ALBUM],
     });
+    queryClient.invalidateQueries({
+      queryKey: [STATS_API_PORTOCAL().BASE_URL],
+    });
     toast.success("Song created successfully");
-    handleOpenChange(false);
+    handleOpenChange(false, true);
   }
 
   useEffect(() => {
-    if (mode === "edit" && open && song) {
-      reset(song);
-      setImageUrl(song!.imageUrl);
+    if (open) {
+      if (mode === "add") {
+        reset(defaultAddSongFormData);
+        setValue("mode", "add");
+      }
+      if (mode === "update" && song) {
+        setImageUrl(song!.imageUrl);
+        reset({
+          ...song,
+          duration: song.duration.toString(),
+          audioFile: song.audioUrl,
+          imageFile: song.imageUrl,
+        });
+        setValue("mode", "update");
+      }
     }
   }, [mode, open, song]);
 
@@ -134,9 +165,20 @@ const AddSongDialog = ({
         </Button>
       </DialogTrigger>
       <DialogContent
-        className="bg-zinc-900 border-zinc-700 max-h-[90vh] overflow-y-auto"
+        ref={dialogContentRef}
+        className={cn(
+          "bg-zinc-900 border-zinc-700 max-h-[90vh] overflow-y-auto w-full",
+          (isCreatingSongPending || isUpdatingSongPending) &&
+            "overflow-y-hidden"
+        )}
         openIcon
       >
+        {(isCreatingSongPending || isUpdatingSongPending) && (
+          <div className="absolute inset-0 flex items-center justify-center min-h-screen w-full z-[9999]">
+            <Loading className="bg-zinc-800/70 w-full min-h-screen" />
+          </div>
+        )}
+
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">
             {mode === "add" ? "Add New Song" : "Update Song"}
@@ -197,7 +239,7 @@ const AddSongDialog = ({
           <div
             className={cn(
               "flex items-center justify-center border-2 border-dashed border-zinc-700 rounded-lg cursor-pointer relative",
-              imageFile && imageUrl && "mt-10 bg-gray-200",
+              imageFile && imageUrl && "mt-10",
               errors.imageFile && "border-red-500"
             )}
             onClick={() => imageFileRef.current?.click()}
@@ -208,7 +250,8 @@ const AddSongDialog = ({
                   <div className="flex items-center justify-center gap-2 absolute -top-10 left-[50%] -translate-x-1/2 w-full">
                     <div className="text-emerald-500">Image Selected:</div>
                     <div className="text-xl text-zinc-400">
-                      {imageFile.name.slice(0, 20)}
+                      {typeof imageFile !== "string" &&
+                        (imageFile as File).name.slice(0, 20)}
                     </div>
                   </div>
                   <img
@@ -235,32 +278,48 @@ const AddSongDialog = ({
           <div className="space-y-2">
             <label className="text-sm font-medium">Audio File</label>
             <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
+              <div
                 className={cn(
-                  "w-full h-10",
-                  errors.audioFile && "border-red-500"
+                  "flex-1 rounded-md border bg-zinc-800/50",
+                  errors.audioFile && "border-red-500",
+                  "border-zinc-700"
                 )}
-                onClick={(e) => {
-                  if (audioFileRef.current) {
-                    e.preventDefault();
-                    audioFileRef.current.click();
-                  }
-                }}
               >
                 {audioFile ? (
-                  <div className="flex items-center gap-2">
-                    <div className="text-sm text-emerald-500">
-                      {audioFile.name.slice(0, 20)}
+                  typeof audioFile === "string" ? (
+                    <div className="flex items-center p-2 py-4">
+                      <audio
+                        className="w-full h-8 [&::-webkit-media-controls-panel]:bg-zinc-800 [&::-webkit-media-controls-panel]:hover:bg-zinc-700 [&::-webkit-media-controls-current-time-display]:text-white [&::-webkit-media-controls-time-remaining-display]:text-white [&::-webkit-media-controls-timeline]:rounded-lg [&::-webkit-media-controls-play-button]:hover:brightness-150 [&::-webkit-media-controls-timeline]:overflow-hidden [&::-webkit-media-controls-volume-slider]:accent-emerald-500 [&::-webkit-media-controls-timeline]:accent-emerald-500"
+                        src={audioFile}
+                        controls
+                        controlsList="nodownload"
+                        onClick={(e) => e.stopPropagation()}
+                      />
                     </div>
-                  </div>
+                  ) : (
+                    <div className="p-2 text-sm text-zinc-400">
+                      {(audioFile as File).name}
+                    </div>
+                  )
                 ) : (
-                  "Choose Audio File"
+                  <p className="text-sm text-zinc-400 p-2 text-center">
+                    Please Upload Audio File
+                  </p>
                 )}
+              </div>
+              <Button
+                variant="outline"
+                className="shrink-0"
+                onClick={() => {
+                  audioFileRef.current?.click();
+                }}
+              >
+                <Upload className="size-4 mr-2" />
+                Upload
               </Button>
             </div>
             {errors.audioFile && (
-              <p className="text-red-500 text-sm text-center">
+              <p className="text-red-500 text-sm">
                 {errors.audioFile?.message as string}
               </p>
             )}
@@ -315,7 +374,6 @@ const AddSongDialog = ({
           {/* Submit and Cancel */}
           <div className="flex justify-end items-center gap-2">
             <Button
-              type="button"
               onClick={() => handleOpenChange(false)}
               className="font-medium bg-zinc-600 text-zinc-300 transition-all duration-150 hover:bg-zinc-700 hover:text-white hover:shadow-zinc-900/30 hover:shadow-lg"
             >

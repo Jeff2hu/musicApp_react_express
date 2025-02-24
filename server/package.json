@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "seed:song": "node src/utils/seedSong.js",
-    "seed:album": "node src/utils/seedAlbum.js"
+    "seedSongAndAlbum": "node src/utils/seedSong.js && node src/utils/seedAlbum.js"
   },
   "type": "module",
   "keywords": [],

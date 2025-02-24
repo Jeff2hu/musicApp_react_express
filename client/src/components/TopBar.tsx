@@ -8,12 +8,14 @@ import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/zustand/useAuthStore";
 import { SignedOut, UserButton } from "@clerk/clerk-react";
 import { LayoutDashboardIcon, ShieldAlertIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import HeaderIcon from "./HeaderIcon";
 import SignInOAuthButton from "./SignInOAuthButton";
 import { buttonVariants } from "./ui/button";
 
 const TopBar = () => {
+  const { t } = useTranslation();
   const isAdmin = useAuthStore((state) => state.isAdmin);
 
   return (
@@ -31,10 +33,7 @@ const TopBar = () => {
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p className="text-sm">
-                    If you don't want to login as admin, <br />
-                    you can just click the button to go to the admin dashboard.
-                  </p>
+                  <p className="text-sm">{t("TOP_BAR.ADMIN_TOOLTIP")}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -44,7 +43,7 @@ const TopBar = () => {
             className={cn(buttonVariants({ variant: "outline" }))}
           >
             <LayoutDashboardIcon className="size-4 mr-2" />
-            Admin Dashboard
+            {t("TOP_BAR.ADMIN_DASHBOARD")}
           </Link>
         </div>
 

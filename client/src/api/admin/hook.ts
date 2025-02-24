@@ -1,8 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
-import { postCreateSongApi, putUpdateSongApi } from "./api";
-import { ADMIN_API_PORTOCAL } from "./protocol";
-
-const ADMIN_BASE_URL = ADMIN_API_PORTOCAL();
+import {
+  deleteAlbumApi,
+  deleteSongApi,
+  postCreateAlbumApi,
+  postCreateSongApi,
+  putUpdateAlbumApi,
+  putUpdateSongApi,
+} from "./api";
 
 export const useCreateSong = (successCallback: () => void) => {
   return useMutation({
@@ -11,9 +15,37 @@ export const useCreateSong = (successCallback: () => void) => {
   });
 };
 
+export const useDeleteSong = (successCallback: () => void) => {
+  return useMutation({
+    mutationFn: deleteSongApi,
+    onSuccess: successCallback,
+  });
+};
+
 export const useUpdateSong = (successCallback: () => void) => {
   return useMutation({
     mutationFn: putUpdateSongApi,
+    onSuccess: successCallback,
+  });
+};
+
+export const useCreateAlbum = (successCallback: () => void) => {
+  return useMutation({
+    mutationFn: postCreateAlbumApi,
+    onSuccess: successCallback,
+  });
+};
+
+export const useDeleteAlbum = (successCallback: () => void) => {
+  return useMutation({
+    mutationFn: deleteAlbumApi,
+    onSuccess: successCallback,
+  });
+};
+
+export const useUpdateAlbum = (successCallback: () => void) => {
+  return useMutation({
+    mutationFn: putUpdateAlbumApi,
     onSuccess: successCallback,
   });
 };

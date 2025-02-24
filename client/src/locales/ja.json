@@ -1,0 +1,95 @@
+{
+  "SYSTEM": {
+    "ACTIONS": "操作",
+    "CANCEL": "キャンセル",
+    "SUBMIT": "送信",
+    "UPLOAD": "アップロード"
+  },
+  "AUTH_CALLBACK": {
+    "AUTH_ING": "Google で認証中..."
+  },
+  "LAYOUT": {
+    "PLAYLIST": "プレイリスト"
+  },
+  "TOP_BAR": {
+    "ADMIN_TOOLTIP": "管理者としてログインしたくない場合は、ボタンをクリックして管理者ダッシュボードにアクセスできます。",
+    "ADMIN_DASHBOARD": "管理者ダッシュボード",
+    "SIGN_IN_WITH_GOOGLE": "Google でサインイン"
+  },
+  "HEADER_ICON": {
+    "SUBTITLE": "音楽アプリを管理します"
+  },
+  "HOME": {
+    "TITLE": "ホーム",
+    "MADE_FOR_YOU": "あなたのために作成された",
+    "TRENDING": "トレンド"
+  },
+  "SETTING": {
+    "TITLE": "設定",
+    "LANGUAGE": "言語",
+    "DISPLAY_LANGUAGE": "表示言語",
+    "THEME": "テーマ"
+  },
+  "SEARCH": {
+    "TITLE": "検索"
+  },
+  "CHAT": {
+    "TITLE": "チャット"
+  },
+  "FRIENDS_ACTIVITY": {
+    "TITLE": "彼らが何を聞いているか..."
+  },
+  "SONG": {
+    "TITLE": "曲",
+    "ARTIST": "アーティスト",
+    "RELEASE_DATE": "発売日",
+    "AUDIO_FILE": "音声ファイル",
+    "PLEASE_UPLOAD_AUDIO_FILE": "音声ファイルをアップロードしてください",
+    "UPDATE_SONG": "曲を更新",
+    "DURATION": "再生時間(秒)",
+    "ALBUM_OPTIONAL": "アルバム(任意)",
+    "ENTER_THE_SONG_TITLE": "曲名を入力してください",
+    "ENTER_THE_ARTIST_NAME": "アーティスト名を入力してください",
+    "ENTER_THE_DURATION": "再生時間を入力してください(秒)"
+  },
+  "ALBUM": {
+    "TITLE": "アルバム",
+    "SONG": "曲",
+    "ARTIST": "アーティスト",
+    "RELEASE_DATE": "発売日",
+    "ENTER_THE_ALBUM_TITLE": "アルバム名を入力してください",
+    "ENTER_THE_RELEASE_DATE": "発売日を入力してください",
+    "ENTER_THE_ARTIST_NAME": "アーティスト名を入力してください"
+  },
+  "STATS": {
+    "TOTAL_SONGS": "総曲数",
+    "TOTAL_ALBUMS": "総アルバム数",
+    "TOTAL_ARTISTS": "総アーティスト数",
+    "TOTAL_USERS": "総ユーザー数"
+  },
+  "ADMIN": {
+    "SONGS": "曲",
+    "ALBUMS": "アルバム",
+    "SONGS_LIBRARY": "曲ライブラリ",
+    "MANAGE_YOUR_SONGS": "曲を管理",
+    "ALBUMS_LIBRARY": "アルバムライブラリ",
+    "MANAGE_YOUR_ALBUMS": "アルバムを管理",
+    "ADD_NEW_SONG": "新しい曲を追加",
+    "UPDATE_SONG": "曲を更新",
+    "ADD_NEW_ALBUM": "新しいアルバムを追加",
+    "UPDATE_ALBUM": "アルバムを更新",
+    "ADD_NEW_SONG_TO_YOUR_LIBRARY": "ライブラリに新しい曲を追加",
+    "ADD_NEW_ALBUM_TO_YOUR_LIBRARY": "ライブラリに新しいアルバムを追加",
+    "UPDATE_THE_SONG_DETAILS": "曲の詳細を更新",
+    "UPDATE_THE_ALBUM_DETAILS": "アルバムの詳細を更新",
+    "CHOOSE_FILE": "ファイルを選択",
+    "UPLOAD_IMAGE": "画像をアップロード",
+    "IMAGE_SELECTED": "画像が選択されました",
+    "SUCCESSFULLY_UPDATED_THE_SONG": "曲が正常に更新されました",
+    "SUCCESSFULLY_CREATED_THE_SONG": "曲が正常に作成されました",
+    "SUCCESSFULLY_DELETED_THE_SONG": "曲が正常に削除されました",
+    "SUCCESSFULLY_UPDATED_THE_ALBUM": "アルバムが正常に更新されました",
+    "SUCCESSFULLY_CREATED_THE_ALBUM": "アルバムが正常に作成されました",
+    "SUCCESSFULLY_DELETED_THE_ALBUM": "アルバムが正常に削除されました"
+  }
+}

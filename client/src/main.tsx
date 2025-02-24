@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import { Alert } from "./components/Alert.tsx";
 import "./index.css";
+import "./lib/i18n";
 import AuthProvider from "./provider/AuthProvider.tsx";
 
 // Import your Publishable Key

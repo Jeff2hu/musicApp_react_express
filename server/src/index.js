@@ -14,11 +14,17 @@ import songRoutes from "./routes/song.route.js";
 import statsRoutes from "./routes/stats.route.js";
 import userRoutes from "./routes/user.route.js";
 
+import { createServer } from "http";
+import { initSocket } from "./lib/socket.js";
+
 dotenv.config();
 
 const __dirname = path.resolve();
 const app = express();
 const port = process.env.PORT || 8000;
+
+const httpServer = createServer(app);
+initSocket(httpServer);
 
 app.use(cors());
 app.use(express.json());

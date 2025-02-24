@@ -3,29 +3,42 @@ import PlaylistsSkeleton from "@/components/skeletons/PlaylistsSkeleton";
 import { buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { HomeIcon, LibraryIcon, MessageCircle, SearchIcon } from "lucide-react";
+import {
+  HomeIcon,
+  LibraryIcon,
+  MessageCircle,
+  SearchIcon,
+  SettingsIcon,
+} from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-const links = [
-  {
-    name: "Home",
-    icon: HomeIcon,
-    path: "/",
-  },
-  {
-    name: "Messages",
-    icon: MessageCircle,
-    path: "/chat",
-  },
-  {
-    name: "Search",
-    icon: SearchIcon,
-    path: "/search",
-  },
-];
-
 const LeftSideBar = () => {
+  const { t } = useTranslation();
   const { data: albums, isLoading: isAlbumsLoading } = useGetAlbums();
+
+  const links = [
+    {
+      name: t("HOME.TITLE"),
+      icon: HomeIcon,
+      path: "/",
+    },
+    {
+      name: t("SETTING.TITLE"),
+      icon: SettingsIcon,
+      path: "/setting",
+    },
+    {
+      name: t("CHAT.TITLE"),
+      icon: MessageCircle,
+      path: "/chat",
+    },
+    {
+      name: t("SEARCH.TITLE"),
+      icon: SearchIcon,
+      path: "/search",
+    },
+  ];
 
   return (
     <div className="h-full flex flex-col gap-2">
@@ -56,7 +69,7 @@ const LeftSideBar = () => {
         <div className="flex justify-between items-center mb-4">
           <div className="flex items-center text-white p-2">
             <LibraryIcon className="mr-2 size-5" />
-            <span className="hidden md:inline">Playlists</span>
+            <span className="hidden md:inline">{t("LAYOUT.PLAYLIST")}</span>
           </div>
         </div>
 

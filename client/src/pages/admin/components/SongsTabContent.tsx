@@ -8,16 +8,18 @@ import {
 import { Song } from "@/type/song";
 import { Music } from "lucide-react";
 import { useState } from "react";
-import AddSongDialog from "./AddSongDialog";
+import { useTranslation } from "react-i18next";
+import EditSongDialog from "./EditSongDialog";
 import SongsTable from "./SongsTable";
 
 const SongsTabContent = () => {
-  const [openAddSongDialog, setOpenAddSongDialog] = useState(false);
+  const { t } = useTranslation();
+  const [openEditSongDialog, setOpenEditSongDialog] = useState(false);
   const [mode, setMode] = useState<"add" | "update">("add");
   const [song, setSong] = useState<Song | null>(null);
 
   const onClickUpdateSong = (song: Song) => {
-    setOpenAddSongDialog(true);
+    setOpenEditSongDialog(true);
     setMode("update");
     setSong(song);
   };
@@ -30,15 +32,15 @@ const SongsTabContent = () => {
             <div>
               <CardTitle className="flex items-center gap-3">
                 <Music className="size-7 text-emerald-500" />
-                Songs Library
+                {t("ADMIN.SONGS_LIBRARY")}
               </CardTitle>
               <CardDescription className="py-2 font-bold">
-                Manage your songs here
+                {t("ADMIN.MANAGE_YOUR_SONGS")}
               </CardDescription>
             </div>
-            <AddSongDialog
-              open={openAddSongDialog}
-              onOpenChange={setOpenAddSongDialog}
+            <EditSongDialog
+              open={openEditSongDialog}
+              onOpenChange={setOpenEditSongDialog}
               setMode={setMode}
               mode={mode}
               setSong={setSong}

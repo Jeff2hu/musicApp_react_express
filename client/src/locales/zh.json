@@ -1,0 +1,95 @@
+{
+  "SYSTEM": {
+    "ACTIONS": "操作",
+    "CANCEL": "取消",
+    "SUBMIT": "提交",
+    "UPLOAD": "上傳"
+  },
+  "AUTH_CALLBACK": {
+    "AUTH_ING": "正在使用 Google 進行驗證..."
+  },
+  "LAYOUT": {
+    "PLAYLIST": "播放清單"
+  },
+  "TOP_BAR": {
+    "ADMIN_TOOLTIP": "如果你不想以管理員身份登錄，可以點擊按鈕進入管理員儀表板。",
+    "ADMIN_DASHBOARD": "管理員儀表板",
+    "SIGN_IN_WITH_GOOGLE": "使用 Google 登錄"
+  },
+  "HEADER_ICON": {
+    "SUBTITLE": "管理你的音樂 App"
+  },
+  "HOME": {
+    "TITLE": "首頁",
+    "MADE_FOR_YOU": "為你推薦",
+    "TRENDING": "熱門歌曲"
+  },
+  "SETTING": {
+    "TITLE": "設定",
+    "LANGUAGE": "語言",
+    "DISPLAY_LANGUAGE": "顯示語言",
+    "THEME": "主題"
+  },
+  "SEARCH": {
+    "TITLE": "搜尋"
+  },
+  "CHAT": {
+    "TITLE": "聊天"
+  },
+  "FRIENDS_ACTIVITY": {
+    "TITLE": "他們正在聽..."
+  },
+  "SONG": {
+    "TITLE": "歌曲",
+    "ARTIST": "藝人",
+    "RELEASE_DATE": "發行日期",
+    "AUDIO_FILE": "音樂檔案",
+    "PLEASE_UPLOAD_AUDIO_FILE": "請上傳音樂檔案",
+    "UPDATE_SONG": "更新歌曲",
+    "DURATION": "持續時間(秒)",
+    "ALBUM_OPTIONAL": "專輯(選填)",
+    "ENTER_THE_SONG_TITLE": "請輸入歌曲標題",
+    "ENTER_THE_ARTIST_NAME": "請輸入藝人名稱",
+    "ENTER_THE_DURATION": "請輸入持續時間(秒)"
+  },
+  "ALBUM": {
+    "TITLE": "專輯",
+    "SONG": "歌曲",
+    "ARTIST": "藝人",
+    "RELEASE_DATE": "發行日期",
+    "ENTER_THE_ALBUM_TITLE": "請輸入專輯標題",
+    "ENTER_THE_RELEASE_DATE": "請輸入發行日期",
+    "ENTER_THE_ARTIST_NAME": "請輸入藝人名稱"
+  },
+  "STATS": {
+    "TOTAL_SONGS": "總歌曲數",
+    "TOTAL_ALBUMS": "總專輯數",
+    "TOTAL_ARTISTS": "總藝人數",
+    "TOTAL_USERS": "總用戶數"
+  },
+  "ADMIN": {
+    "SONGS": "歌曲",
+    "ALBUMS": "專輯",
+    "SONGS_LIBRARY": "歌曲庫",
+    "MANAGE_YOUR_SONGS": "管理你的歌曲",
+    "ALBUMS_LIBRARY": "專輯庫",
+    "MANAGE_YOUR_ALBUMS": "管理你的專輯",
+    "ADD_NEW_SONG": "新增歌曲",
+    "UPDATE_SONG": "更新歌曲",
+    "ADD_NEW_ALBUM": "新增專輯",
+    "UPDATE_ALBUM": "更新專輯",
+    "ADD_NEW_SONG_TO_YOUR_LIBRARY": "新增歌曲到你的庫存",
+    "ADD_NEW_ALBUM_TO_YOUR_LIBRARY": "新增專輯到你的庫存",
+    "UPDATE_THE_SONG_DETAILS": "更新歌曲詳細資料",
+    "UPDATE_THE_ALBUM_DETAILS": "更新專輯詳細資料",
+    "CHOOSE_FILE": "選擇檔案",
+    "UPLOAD_IMAGE": "上傳圖片",
+    "IMAGE_SELECTED": "圖片已選取",
+    "SUCCESSFULLY_UPDATED_THE_SONG": "歌曲已成功更新",
+    "SUCCESSFULLY_CREATED_THE_SONG": "歌曲已成功新增",
+    "SUCCESSFULLY_DELETED_THE_SONG": "歌曲已成功刪除",
+    "SUCCESSFULLY_UPDATED_THE_ALBUM": "專輯已成功更新",
+    "SUCCESSFULLY_CREATED_THE_ALBUM": "專輯已成功新增",
+    "SUCCESSFULLY_DELETED_THE_ALBUM": "專輯已成功刪除"
+  }
+}

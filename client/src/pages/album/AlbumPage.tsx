@@ -7,11 +7,13 @@ import usePlayerStore from "@/zustand/usePlayerStore";
 import gsap from "gsap";
 import { Clock, Pause, Play } from "lucide-react";
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 
 const AlbumPage = () => {
   const { albumId } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const { currentSong, isPlaying, playAlbum, togglePlay } = usePlayerStore();
 
@@ -114,8 +116,8 @@ const AlbumPage = () => {
                 {/* table header */}
                 <div className="grid grid-cols-[16px_4fr_2fr_1fr] gap-4 px-10 py-2 text-sm text-zinc-400 border-b border-white/5">
                   <p>#</p>
-                  <p>Title</p>
-                  <p>Released Date</p>
+                  <p>{t("ALBUM.SONG")}</p>
+                  <p>{t("ALBUM.RELEASE_DATE")}</p>
                   <p className="pl-2">
                     <Clock className="size-4" />
                   </p>

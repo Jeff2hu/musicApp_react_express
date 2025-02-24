@@ -1,6 +1,5 @@
 import express from "express";
 import {
-  deleteSongController,
   getAllSongsController,
   getFeaturedSongController,
   getMadeForYouSongController,
@@ -11,7 +10,6 @@ const router = express.Router();
 
 // , protectMiddleware, adminMiddleware
 router.get("/", getAllSongsController);
-router.delete("/:id", deleteSongController);
 
 router.get("/featured", getFeaturedSongController);
 router.get("/madeForYou", getMadeForYouSongController);

@@ -1,5 +1,5 @@
-import { useDeleteSong } from "@/api/admin/hook";
-import { SONG_API_PORTOCAL } from "@/api/song/protocol";
+import { useDeleteAlbum } from "@/api/admin/hook";
+import { ALBUM_API_PORTOCAL } from "@/api/album/protocol";
 import { STATS_API_PORTOCAL } from "@/api/stats/protocol";
 import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Song } from "@/type/song";
+import { Album } from "@/type/album";
 import { useAlert } from "@/zustand/useAlert";
 import useMusicStore from "@/zustand/useMusicStore";
 import { useQueryClient } from "@tanstack/react-query";
@@ -20,39 +20,41 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
-interface SongsTableProps {
-  onClickUpdateSong: (song: Song) => void;
+interface AlbumsTableProps {
+  onClickUpdateAlbum: (album: Album) => void;
 }
 
-const SongsTable = ({ onClickUpdateSong }: SongsTableProps) => {
+const AlbumsTable = ({ onClickUpdateAlbum }: AlbumsTableProps) => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
 
   const { setAlertOption } = useAlert();
-  const songs = useMusicStore((state) => state.songs);
+  const albums = useMusicStore((state) => state.albums);
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const { mutate: deleteSong } = useDeleteSong(deleteSongSuccess);
+  const { mutate: deleteAlbum } = useDeleteAlbum(deleteAlbumSuccess);
 
-  const deleteSongHandler = (id: string) => {
+  const deleteAlbumHandler = (id: string) => {
     setIsLoading(true);
-    deleteSong(id);
+    deleteAlbum(id);
   };
 
-  const deleteSongConfirmation = (id: string) => {
+  const deleteAlbumConfirmation = (id: string) => {
     setAlertOption({
       open: true,
-      title: "Delete Song",
-      description: "Are you sure you want to delete this song?",
+      title: "Delete Album",
+      description: "Are you sure you want to delete this album?",
       onOk: () => {
-        deleteSongHandler(id);
+        deleteAlbumHandler(id);
       },
     });
   };
 
-  function deleteSongSuccess() {
-    queryClient.invalidateQueries({ queryKey: [SONG_API_PORTOCAL().BASE_URL] });
+  function deleteAlbumSuccess() {
+    queryClient.invalidateQueries({
+      queryKey: [ALBUM_API_PORTOCAL().GET_ALBUM],
+    });
     queryClient.invalidateQueries({
       queryKey: [STATS_API_PORTOCAL().BASE_URL],
     });
@@ -78,24 +80,24 @@ const SongsTable = ({ onClickUpdateSong }: SongsTableProps) => {
             <Loading />
           </TableRow>
         ) : (
-          songs.map((song) => (
+          albums.map((album) => (
             <TableRow
-              key={song._id}
+              key={album._id}
               className="hover:bg-zinc-800/50 cursor-pointer"
             >
               <TableCell className="font-medium">
                 <img
-                  src={song.imageUrl}
-                  alt={song.title}
+                  src={album.imageUrl}
+                  alt={album.title}
                   className="size-10 rounded object-cover"
                 />
               </TableCell>
-              <TableCell className="font-medium">{song.title}</TableCell>
-              <TableCell>{song.artist}</TableCell>
+              <TableCell className="font-medium">{album.title}</TableCell>
+              <TableCell>{album.artist}</TableCell>
               <TableCell>
                 <span className="inline-flex items-center gap-1 text-zinc-400">
                   <Calendar className="size-4" />
-                  {song.createdAt.split("T")[0]}
+                  {album.releaseYear}
                 </span>
               </TableCell>
               <TableCell className="text-right">
@@ -104,14 +106,14 @@ const SongsTable = ({ onClickUpdateSong }: SongsTableProps) => {
                     variant="ghost"
                     size="sm"
                     className="text-red-400 hover:text-red-300 hover:bg-red-400/10"
-                    onClick={() => deleteSongConfirmation(song._id)}
+                    onClick={() => deleteAlbumConfirmation(album._id)}
                   >
                     <Trash className="size-4" />
                   </Button>
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => onClickUpdateSong(song)}
+                    onClick={() => onClickUpdateAlbum(album)}
                   >
                     <Edit className="size-4" />
                   </Button>
@@ -125,4 +127,4 @@ const SongsTable = ({ onClickUpdateSong }: SongsTableProps) => {
   );
 };
 
-export default SongsTable;
+export default AlbumsTable;

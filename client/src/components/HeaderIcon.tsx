@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 interface HeaderIconProps {
@@ -5,6 +6,8 @@ interface HeaderIconProps {
 }
 
 const HeaderIcon = ({ isIcon = false }: HeaderIconProps) => {
+  const { t } = useTranslation();
+
   return (
     <Link to={"/"} className="flex items-center gap-6">
       <img
@@ -16,7 +19,7 @@ const HeaderIcon = ({ isIcon = false }: HeaderIconProps) => {
       {!isIcon && (
         <div className="flex flex-col gap-1">
           <h1 className="text-2xl font-bold">Music App</h1>
-          <p className="text-lg text-zinc-400">Manage your music app</p>
+          <p className="text-lg text-zinc-400">{t("HEADER_ICON.SUBTITLE")}</p>
         </div>
       )}
     </Link>

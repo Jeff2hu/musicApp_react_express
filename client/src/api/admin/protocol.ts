@@ -7,6 +7,7 @@ export const ADMIN_API_PORTOCAL = () => {
     DELETE_SONG: (id: string) => `/admin/song/${id}`,
 
     CREATE_ALBUM: "/admin/album",
+    UPDATE_ALBUM: (id: string) => `/admin/album/${id}`,
     DELETE_ALBUM: (id: string) => `/admin/album/${id}`,
   };
 };

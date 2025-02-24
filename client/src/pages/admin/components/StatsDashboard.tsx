@@ -1,38 +1,40 @@
 import { Card, CardContent } from "@/components/ui/card";
 import useMusicStore from "@/zustand/useMusicStore";
-import { Library, ListMusic, Users2 } from "lucide-react";
+import { AudioLines, Library, ListMusic, Users2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const StatsDashboard = () => {
+  const { t } = useTranslation();
   const stats = useMusicStore((state) => state.stats);
 
   const statsData = [
     {
       icon: ListMusic,
-      label: "Total Songs",
+      label: t("STATS.TOTAL_SONGS"),
       value: stats.totalSongs.toString(),
       bgColor: "bg-emerald-500/10",
       textColor: "text-emerald-500",
     },
     {
       icon: Library,
-      label: "Total Albums",
+      label: t("STATS.TOTAL_ALBUMS"),
       value: stats.totalAlbums.toString(),
       bgColor: "bg-violet-500/10",
       textColor: "text-violet-500",
     },
     {
-      icon: Users2,
-      label: "Total Artists",
+      icon: AudioLines,
+      label: t("STATS.TOTAL_ARTISTS"),
       value: stats.totalArtists.toString(),
-      bgColor: "bg-orange-500/10",
-      textColor: "text-orange-500",
+      bgColor: "bg-yellow-500/10",
+      textColor: "text-yellow-500",
     },
     {
-      icon: ListMusic,
-      label: "Total Songs",
-      value: stats.totalSongs.toString(),
-      bgColor: "bg-emerald-500/10",
-      textColor: "text-emerald-500",
+      icon: Users2,
+      label: t("STATS.TOTAL_USERS"),
+      value: stats.totalUsers.toString(),
+      bgColor: "bg-orange-500/10",
+      textColor: "text-orange-500",
     },
   ];
 

@@ -3,8 +3,10 @@ import Loading from "@/components/Loading";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Music, Users } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const FriendsActivity = () => {
+  const { t } = useTranslation();
   const { data: users, isLoading } = useGetAllUsers();
 
   const isPlaying = true;
@@ -14,7 +16,7 @@ const FriendsActivity = () => {
       <div className="flex justify-between items-center p-4 border-b border-zinc-800">
         <div className="flex items-center gap-2">
           <Users className="size-5 shrink-0" />
-          <h2 className="font-semibold">What they're listening to</h2>
+          <h2 className="font-semibold">{t("FRIENDS_ACTIVITY.TITLE")}</h2>
         </div>
       </div>
 

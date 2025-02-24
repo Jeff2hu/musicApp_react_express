@@ -55,6 +55,20 @@ export const updateSong = async (id, req) => {
       throw new Error("Song not found");
     }
 
+    // 如果原本有專輯，且新的專輯ID不同，從原專輯移除這首歌
+    if (song.albumId && song.albumId.toString() !== albumId) {
+      await Album.findByIdAndUpdate(song.albumId, {
+        $pull: { songs: song._id },
+      });
+    }
+
+    // 如果有新的專輯ID，且與原本的不同，將歌曲加入新專輯
+    if (albumId && song.albumId?.toString() !== albumId) {
+      await Album.findByIdAndUpdate(albumId, {
+        $push: { songs: song._id },
+      });
+    }
+
     const audioUrl =
       typeof audioFile === "string"
         ? audioFile
@@ -116,6 +130,36 @@ export const createAlbum = async (req) => {
     });
 
     return newAlbum;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateAlbum = async (id, req) => {
+  try {
+    const { title, artist, releaseYear } = req.body;
+
+    const imageFile = req.files?.imageFile || req.body?.imageFile;
+
+    const imageUrl =
+      typeof imageFile === "string"
+        ? imageFile
+        : await uploadToCloudinary(imageFile);
+
+    const album = await Album.findById(id);
+
+    if (!album) {
+      throw new Error("Album not found");
+    }
+
+    const updatedAlbum = await Album.findByIdAndUpdate(id, {
+      title,
+      artist,
+      imageUrl,
+      releaseYear,
+    });
+
+    return updatedAlbum;
   } catch (error) {
     throw error;
   }

@@ -5,6 +5,7 @@ import Loading from "@/components/Loading";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuthStore } from "@/zustand/useAuthStore";
 import { Album, Music } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import HeaderIcon from "../../components/HeaderIcon";
 import AlbumsTabContent from "./components/AlbumsTabContent";
@@ -13,6 +14,7 @@ import StatsDashboard from "./components/StatsDashboard";
 
 const AdminPage = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const isAdmin = useAuthStore((state) => state.isAdmin);
 
@@ -36,14 +38,14 @@ const AdminPage = () => {
               className="data-[state=active]:bg-zinc-700"
             >
               <Music className="mr-2 size-4" />
-              Songs
+              {t("ADMIN.SONGS")}
             </TabsTrigger>
             <TabsTrigger
               value="albums"
               className="data-[state=active]:bg-zinc-700"
             >
               <Album className="mr-2 size-4" />
-              Albums
+              {t("ADMIN.ALBUMS")}
             </TabsTrigger>
           </TabsList>
 

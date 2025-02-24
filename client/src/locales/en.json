@@ -1,0 +1,95 @@
+{
+  "SYSTEM": {
+    "ACTIONS": "Actions",
+    "CANCEL": "Cancel",
+    "SUBMIT": "Submit",
+    "UPLOAD": "Upload"
+  },
+  "AUTH_CALLBACK": {
+    "AUTH_ING": "Authenticating with Google..."
+  },
+  "LAYOUT": {
+    "PLAYLIST": "Playlist"
+  },
+  "TOP_BAR": {
+    "ADMIN_TOOLTIP": "If you don't want to login as admin, you can just click the button to go to the admin dashboard.",
+    "ADMIN_DASHBOARD": "Admin Dashboard",
+    "SIGN_IN_WITH_GOOGLE": "Sign in with Google"
+  },
+  "HEADER_ICON": {
+    "SUBTITLE": "Manage your music app"
+  },
+  "HOME": {
+    "TITLE": "Home",
+    "MADE_FOR_YOU": "Made for you",
+    "TRENDING": "Trending"
+  },
+  "SETTING": {
+    "TITLE": "Setting",
+    "LANGUAGE": "Language",
+    "DISPLAY_LANGUAGE": "Display Language",
+    "THEME": "Theme"
+  },
+  "SEARCH": {
+    "TITLE": "Search"
+  },
+  "CHAT": {
+    "TITLE": "Chat"
+  },
+  "FRIENDS_ACTIVITY": {
+    "TITLE": "What they're listening to..."
+  },
+  "SONG": {
+    "TITLE": "Song",
+    "ARTIST": "Artist",
+    "RELEASE_DATE": "Release Date",
+    "AUDIO_FILE": "Audio File",
+    "PLEASE_UPLOAD_AUDIO_FILE": "Please upload audio file",
+    "UPDATE_SONG": "Update Song",
+    "DURATION": "Duration (seconds)",
+    "ALBUM_OPTIONAL": "Album (Optional)",
+    "ENTER_THE_SONG_TITLE": "Please enter the song title",
+    "ENTER_THE_ARTIST_NAME": "Please enter the artist name",
+    "ENTER_THE_DURATION": "Please enter the duration (seconds)"
+  },
+  "ALBUM": {
+    "TITLE": "Album",
+    "SONG": "Song",
+    "ARTIST": "Artist",
+    "RELEASE_DATE": "Release Date",
+    "ENTER_THE_ALBUM_TITLE": "Please enter the album title",
+    "ENTER_THE_RELEASE_DATE": "Please enter the release date",
+    "ENTER_THE_ARTIST_NAME": "Please enter the artist name"
+  },
+  "STATS": {
+    "TOTAL_SONGS": "Total Songs",
+    "TOTAL_ALBUMS": "Total Albums",
+    "TOTAL_ARTISTS": "Total Artists",
+    "TOTAL_USERS": "Total Users"
+  },
+  "ADMIN": {
+    "SONGS": "Songs",
+    "ALBUMS": "Albums",
+    "SONGS_LIBRARY": "Songs Library",
+    "MANAGE_YOUR_SONGS": "Manage your songs",
+    "ALBUMS_LIBRARY": "Albums Library",
+    "MANAGE_YOUR_ALBUMS": "Manage your albums",
+    "ADD_NEW_SONG": "Add New Song",
+    "UPDATE_SONG": "Update Song",
+    "ADD_NEW_ALBUM": "Add New Album",
+    "UPDATE_ALBUM": "Update Album",
+    "ADD_NEW_SONG_TO_YOUR_LIBRARY": "Add new song to your library",
+    "ADD_NEW_ALBUM_TO_YOUR_LIBRARY": "Add new album to your library",
+    "UPDATE_THE_SONG_DETAILS": "Update the song details",
+    "UPDATE_THE_ALBUM_DETAILS": "Update the album details",
+    "CHOOSE_FILE": "Choose File",
+    "UPLOAD_IMAGE": "Upload Image",
+    "IMAGE_SELECTED": "Image Selected",
+    "SUCCESSFULLY_UPDATED_THE_SONG": "Successfully updated the song",
+    "SUCCESSFULLY_CREATED_THE_SONG": "Successfully created the song",
+    "SUCCESSFULLY_DELETED_THE_SONG": "Successfully deleted the song",
+    "SUCCESSFULLY_UPDATED_THE_ALBUM": "Successfully updated the album",
+    "SUCCESSFULLY_CREATED_THE_ALBUM": "Successfully created the album",
+    "SUCCESSFULLY_DELETED_THE_ALBUM": "Successfully deleted the album"
+  }
+}

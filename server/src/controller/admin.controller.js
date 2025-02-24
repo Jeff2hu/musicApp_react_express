@@ -3,6 +3,7 @@ import {
   createSong,
   deleteAlbum,
   deleteSong,
+  updateAlbum,
   updateSong,
 } from "../service/admin.service.js";
 
@@ -103,6 +104,36 @@ export const createAlbumController = async (req, res, next) => {
     res
       .status(200)
       .json({ message: "Album created successfully", data: album });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const updateAlbumController = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { title, artist, releaseYear } = req.body;
+
+    if (!id) {
+      res.status(400).json({ message: "Album id is required" });
+      return;
+    }
+
+    if (!title || !artist || !releaseYear) {
+      res.status(400).json({ message: "Invalid request" });
+      return;
+    }
+
+    if (!req.files?.imageFile && !req.body?.imageFile) {
+      res.status(400).json({ message: "ImageFile is required" });
+      return;
+    }
+
+    const album = await updateAlbum(id, req);
+
+    res
+      .status(200)
+      .json({ message: "Album updated successfully", data: album });
   } catch (err) {
     next(err);
   }

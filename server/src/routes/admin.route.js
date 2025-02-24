@@ -5,12 +5,14 @@ import {
   createSongController,
   deleteAlbumController,
   deleteSongController,
+  updateAlbumController,
   updateSongController,
 } from "../controller/admin.controller.js";
 
 const router = express.Router();
 
-// router.use(protectMiddleware, adminMiddleware);
+//adminMiddleware
+// router.use(protectMiddleware);
 
 router.get("/check", checkAdminController);
 
@@ -19,6 +21,7 @@ router.put("/song/:id", updateSongController);
 router.delete("/song/:id", deleteSongController);
 
 router.post("/album", createAlbumController);
+router.put("/album/:id", updateAlbumController);
 router.delete("/album/:id", deleteAlbumController);
 
 export default router;

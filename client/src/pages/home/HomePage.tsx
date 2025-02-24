@@ -1,10 +1,12 @@
 import { useGetSongMadeForYou, useGetSongTrending } from "@/api/song/hook";
 import TopBar from "@/components/TopBar";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useTranslation } from "react-i18next";
 import FeatureSection from "./components/FeatureSection";
 import SectionGrid from "./components/SectionGrid";
 
 const HomePage = () => {
+  const { t } = useTranslation();
   const { data: songMadeForYou, isLoading: isLoadingMadeForYou } =
     useGetSongMadeForYou();
   const { data: songTrending, isLoading: isLoadingTrending } =
@@ -20,12 +22,12 @@ const HomePage = () => {
 
       <div className="space-y-8">
         <SectionGrid
-          title="Made for you"
+          title={t("HOME.MADE_FOR_YOU")}
           loading={isLoadingMadeForYou}
           songs={songMadeForYou || []}
         />
         <SectionGrid
-          title="Trending"
+          title={t("HOME.TRENDING")}
           loading={isLoadingTrending}
           songs={songTrending || []}
         />

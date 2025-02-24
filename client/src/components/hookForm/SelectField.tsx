@@ -12,7 +12,7 @@ interface SelectFieldProps<T extends FieldValues> {
   label: string;
   name: Path<T>;
   register: UseFormRegister<T>;
-  options: Option[];
+  options: Option<string>[];
   errors: FieldErrors<T>;
   className?: string;
   selectProps?: React.SelectHTMLAttributes<HTMLSelectElement>;

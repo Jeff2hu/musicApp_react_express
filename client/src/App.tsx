@@ -7,6 +7,7 @@ import AuthCallbackPage from "./pages/authCallback/AuthCallbackPage";
 import ChatPage from "./pages/chat/ChatPage";
 import HomePage from "./pages/home/HomePage";
 import SearchPage from "./pages/search/SearchPage";
+import SettingPage from "./pages/setting/SettingPage";
 import { useAuthStore } from "./zustand/useAuthStore";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
 
       <Route element={<MainLayout />}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/setting" element={<SettingPage />} />
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/album/:albumId" element={<AlbumPage />} />
       </Route>

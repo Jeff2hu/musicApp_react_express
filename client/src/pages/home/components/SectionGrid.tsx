@@ -1,5 +1,4 @@
 import SectionGridSkeleton from "@/components/skeletons/SectionGridSkeleton";
-import { Button } from "@/components/ui/button";
 import { SongLite } from "@/type/song";
 import usePlayerStore from "@/zustand/usePlayerStore";
 import PlayButton from "./PlayButton";
@@ -19,12 +18,6 @@ const SectionGrid = <T extends SongLite>({
     <div className="mb-8 p-4">
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-xl sm:text-2xl font-bold">{title}</h2>
-        <Button
-          variant="link"
-          className="text-sm text-zinc-400 hover:text-white"
-        >
-          Show All
-        </Button>
       </div>
 
       {loading || !songs ? (

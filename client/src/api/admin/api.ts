@@ -1,4 +1,5 @@
 import { axiosInstance } from "@/lib/axios";
+import { Album, CreateAlbumRequest, UpdateAlbumRequest } from "@/type/album";
 import { ApiResponse } from "@/type/apiResponse";
 import { CreateSongRequest, Song, UpdateSongRequest } from "@/type/song";
 import errorApiHandler from "@/utils/errorApiHandler";
@@ -59,6 +60,18 @@ export const postCreateSongApi = async (req: CreateSongRequest) => {
   }
 };
 
+export const deleteSongApi = async (id: string) => {
+  try {
+    const res: AxiosResponse<ApiResponse<Song>> = await axiosInstance.delete(
+      ADMIN_BASE_URL.DELETE_SONG(id)
+    );
+
+    return res.data.data;
+  } catch (error) {
+    throw errorApiHandler(error);
+  }
+};
+
 export const putUpdateSongApi = async (req: UpdateSongRequest) => {
   try {
     const formData = new FormData();
@@ -79,6 +92,70 @@ export const putUpdateSongApi = async (req: UpdateSongRequest) => {
           "Content-Type": "multipart/form-data",
         },
       }
+    );
+
+    return res.data.data;
+  } catch (error) {
+    throw errorApiHandler(error);
+  }
+};
+
+export const postCreateAlbumApi = async (req: CreateAlbumRequest) => {
+  try {
+    const formData = new FormData();
+
+    formData.append("title", req.title);
+    formData.append("artist", req.artist);
+    formData.append("releaseYear", req.releaseYear);
+
+    formData.append("imageFile", req.imageFile);
+
+    const res: AxiosResponse<ApiResponse<Album>> = await axiosInstance.post(
+      ADMIN_BASE_URL.CREATE_ALBUM,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return res.data.data;
+  } catch (error) {
+    throw errorApiHandler(error);
+  }
+};
+
+export const putUpdateAlbumApi = async (req: UpdateAlbumRequest) => {
+  try {
+    const formData = new FormData();
+
+    formData.append("title", req.title);
+    formData.append("artist", req.artist);
+    formData.append("releaseYear", req.releaseYear);
+
+    formData.append("imageFile", req.imageFile);
+
+    const res: AxiosResponse<ApiResponse<Album>> = await axiosInstance.put(
+      ADMIN_BASE_URL.UPDATE_ALBUM(req.id),
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return res.data.data;
+  } catch (error) {
+    throw errorApiHandler(error);
+  }
+};
+
+export const deleteAlbumApi = async (id: string) => {
+  try {
+    const res: AxiosResponse<ApiResponse<Album>> = await axiosInstance.delete(
+      ADMIN_BASE_URL.DELETE_ALBUM(id)
     );
 
     return res.data.data;

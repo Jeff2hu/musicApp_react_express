@@ -1,5 +1,6 @@
 import { Song, SongLite } from "@/type/song";
 import { create } from "zustand";
+import { useChatStore } from "./useChatStore";
 
 interface PlayerStore {
   currentSong: Song | null;
@@ -20,6 +21,8 @@ interface PlayerStore {
   setIsPlaying: (isPlaying: boolean) => void;
 }
 
+const chatStore = useChatStore.getState();
+
 const usePlayerStore = create<PlayerStore>((set, get) => ({
   currentSong: null,
   isPlaying: false,
@@ -38,6 +41,8 @@ const usePlayerStore = create<PlayerStore>((set, get) => ({
 
     const song = songs[startIndex];
 
+    chatStore.sendActivity(song);
+
     set({
       queue: songs,
       currentSong: song,
@@ -47,6 +52,8 @@ const usePlayerStore = create<PlayerStore>((set, get) => ({
   },
   setCurrentSong: (song) => {
     if (!song) return;
+
+    chatStore.sendActivity(song);
 
     set((state) => {
       const songIndex = state.queue.findIndex((s) => s._id === song._id);
@@ -70,6 +77,7 @@ const usePlayerStore = create<PlayerStore>((set, get) => ({
           isPlaying: false,
         };
       } else {
+        chatStore.sendActivity(state.queue[nextIndex]);
         return {
           currentIndex: nextIndex,
           currentSong: state.queue[nextIndex],
@@ -86,6 +94,7 @@ const usePlayerStore = create<PlayerStore>((set, get) => ({
           isPlaying: false,
         };
       } else {
+        chatStore.sendActivity(state.queue[prevIndex]);
         return {
           currentIndex: prevIndex,
           currentSong: state.queue[prevIndex],

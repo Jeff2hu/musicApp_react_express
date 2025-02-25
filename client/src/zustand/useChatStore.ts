@@ -1,20 +1,24 @@
+import { Song } from "@/type/song";
 import { User } from "@/type/user";
 import { io, Socket } from "socket.io-client";
 import { create } from "zustand";
 import { Message } from "../type/message";
+import { useAuthStore } from "./useAuthStore";
 
 type ChatStore = {
-  users: User[];
   messages: Message[];
   socket: Socket | null;
   isConnected: boolean;
   onlineUsers: Set<string>;
-  userActivities: Map<string, string>;
+  userActivities: Map<string, { activity: string; [key: string]: any }>;
+  selectedUser: User | null;
 
   setMessages: (messages: Message[]) => void;
   initSocket: (userId: string) => void;
   disconnectSocket: () => void;
   sendMessage: (senderId: string, receiverId: string, content: string) => void;
+  setSelectedUser: (user: User) => void;
+  sendActivity: (song: Song) => void;
 };
 
 const socket = io(import.meta.env.VITE_SOCKET_URL, {
@@ -23,13 +27,13 @@ const socket = io(import.meta.env.VITE_SOCKET_URL, {
 });
 
 export const useChatStore = create<ChatStore>((set, get) => ({
-  users: [],
   messages: [],
   socket: null,
   isConnected: false,
   onlineUsers: new Set(),
   userActivities: new Map(),
-
+  selectedUser: null,
+  setSelectedUser: (selectedUser: User) => set({ selectedUser }),
   setMessages: (messages: Message[]) => set({ messages }),
   initSocket: (userId: string) => {
     socket.auth = { userId };
@@ -40,10 +44,14 @@ export const useChatStore = create<ChatStore>((set, get) => ({
         const onlineUsers = new Set(userIds);
         set({ onlineUsers });
       });
-      socket.on("user_activity", (activities: [string, string][]) => {
-        const userActivities = new Map(activities);
-        set({ userActivities });
-      });
+      socket.on(
+        "user_activity",
+        (activities: [string, { activity: string; [key: string]: any }][]) => {
+          console.log(activities);
+          const userActivities = new Map(activities);
+          set({ userActivities });
+        }
+      );
       socket.on("user_connected", (userIds: string[]) => {
         const onlineUsers = new Set(userIds);
         set({ onlineUsers });
@@ -61,13 +69,19 @@ export const useChatStore = create<ChatStore>((set, get) => ({
       });
       socket.on(
         "activity_updated",
-        ({ userId, activity }: { userId: string; activity: string }) => {
+        ({
+          userId,
+          activity,
+        }: {
+          userId: string;
+          activity: { activity: string; [key: string]: any };
+        }) => {
           const userActivities = new Map(get().userActivities);
           userActivities.set(userId, activity);
           set({ userActivities });
         }
       );
-      set({ isConnected: true });
+      set({ isConnected: true, socket });
     }
   },
   disconnectSocket: () => {
@@ -81,6 +95,21 @@ export const useChatStore = create<ChatStore>((set, get) => ({
     const socket = get().socket;
     if (socket) {
       socket.emit("send_message", { senderId, receiverId, content });
+    }
+  },
+
+  sendActivity: (song: Song) => {
+    const socket = get().socket;
+    const authStore = useAuthStore.getState();
+
+    if (socket && authStore.userId) {
+      socket.emit("update_activity", {
+        userId: authStore.userId,
+        activity: {
+          activity: "MUSIC",
+          song: song,
+        },
+      });
     }
   },
 }));

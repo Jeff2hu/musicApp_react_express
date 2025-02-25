@@ -17,6 +17,7 @@ export const getMessageByUserIdController = async (req, res) => {
   try {
     const currentUserId = req.auth.userId;
     const { userId } = req.params;
+
     const messages = await getMessageByUserId(currentUserId, userId);
     res
       .status(200)

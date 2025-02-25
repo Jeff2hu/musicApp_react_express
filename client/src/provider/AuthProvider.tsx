@@ -1,5 +1,6 @@
 import { checkAdminApi } from "@/api/admin/api";
 import { useAlert } from "@/zustand/useAlert";
+import { useAuthStore } from "@/zustand/useAuthStore";
 import { useChatStore } from "@/zustand/useChatStore";
 import { useAuth } from "@clerk/clerk-react";
 import { Loader } from "lucide-react";
@@ -15,6 +16,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   const setAlertOption = useAlert((state) => state.setAlertOption);
   const initSocket = useChatStore((state) => state.initSocket);
   const disconnectSocket = useChatStore((state) => state.disconnectSocket);
+  const setUserId = useAuthStore((state) => state.setUserId);
 
   const [loading, setLoading] = useState(true);
 
@@ -26,6 +28,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
           await checkAdminApi(token);
         }
         if (userId) {
+          setUserId(userId);
           initSocket(userId);
         }
       } catch (error) {

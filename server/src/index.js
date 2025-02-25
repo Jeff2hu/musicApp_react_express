@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import express from "express";
 import fileUpload from "express-fileupload";
 import path from "path";
-
 import connectDB from "./lib/mongoDb.js";
 
 import adminRoutes from "./routes/admin.route.js";
@@ -23,12 +22,17 @@ const __dirname = path.resolve();
 const app = express();
 const port = process.env.PORT || 8000;
 
-const httpServer = createServer(app);
-initSocket(httpServer);
-
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(clerkMiddleware());
+
+const httpServer = createServer(app);
+initSocket(httpServer);
 
 app.use(
   fileUpload({
@@ -51,7 +55,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message });
 });
 
-app.listen(port, async () => {
+httpServer.listen(port, async () => {
   await connectDB();
   console.log(`Server is running on port ${port}`);
 });

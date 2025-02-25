@@ -4,8 +4,10 @@ import { useAlert } from "@/zustand/useAlert";
 import { useChatStore } from "@/zustand/useChatStore";
 import { useUser } from "@clerk/clerk-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const MessageInput = () => {
+  const { t } = useTranslation();
   const { user } = useUser();
   const { setAlertOption } = useAlert();
   const { selectedUser, sendMessage } = useChatStore();
@@ -30,7 +32,7 @@ const MessageInput = () => {
     <div className="p-4 mt-auto border-t border-zinc-600">
       <div className="flex gap-2">
         <Input
-          placeholder="Type a message"
+          placeholder={t("CHAT.MESSAGE_PLACEHOLDER")}
           value={newMessage}
           onChange={(e) => setNewMassage(e.target.value)}
           className="bg-zinc-700 border-none"
@@ -41,7 +43,7 @@ const MessageInput = () => {
             }
           }}
         />
-        <Button onClick={sendHandler}>Send</Button>
+        <Button onClick={sendHandler}>{t("CHAT.SEND")}</Button>
       </div>
     </div>
   );

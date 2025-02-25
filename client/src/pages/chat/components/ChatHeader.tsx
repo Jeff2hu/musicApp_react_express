@@ -1,7 +1,9 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useChatStore } from "@/zustand/useChatStore";
+import { useTranslation } from "react-i18next";
 
 const ChatHeader = () => {
+  const { t } = useTranslation();
   const { selectedUser, onlineUsers } = useChatStore();
 
   if (!selectedUser) return null;
@@ -16,7 +18,9 @@ const ChatHeader = () => {
         <div>
           <h2 className="font-medium">{selectedUser.fullName}</h2>
           <p className="text-sm text-zinc-400">
-            {onlineUsers.has(selectedUser.clerkId) ? "Online" : "Offline"}
+            {onlineUsers.has(selectedUser.clerkId)
+              ? t("CHAT.ONLINE")
+              : t("CHAT.OFFLINE")}
           </p>
         </div>
       </div>

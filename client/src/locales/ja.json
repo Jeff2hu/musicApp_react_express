@@ -34,7 +34,13 @@
     "TITLE": "検索"
   },
   "CHAT": {
-    "TITLE": "チャット"
+    "TITLE": "チャット",
+    "ONLINE": "オンライン",
+    "OFFLINE": "オフライン",
+    "MESSAGE_PLACEHOLDER": "メッセージを入力してください...",
+    "SEND": "送信",
+    "NO_CONVERSATION_SELECTED": "会話が選択されていません",
+    "SELECT_A_CONVERSATION_OR_START_A_NEW_ONE": "会話を選択するか、新しい会話を開始してください"
   },
   "FRIENDS_ACTIVITY": {
     "TITLE": "彼らが何を聞いているか..."

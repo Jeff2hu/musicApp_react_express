@@ -34,7 +34,13 @@
     "TITLE": "Search"
   },
   "CHAT": {
-    "TITLE": "Chat"
+    "TITLE": "Chat",
+    "ONLINE": "Online",
+    "OFFLINE": "Offline",
+    "MESSAGE_PLACEHOLDER": "Type a message...",
+    "SEND": "Send",
+    "NO_CONVERSATION_SELECTED": "No conversation selected",
+    "SELECT_A_CONVERSATION_OR_START_A_NEW_ONE": "Select a conversation or start a new one"
   },
   "FRIENDS_ACTIVITY": {
     "TITLE": "What they're listening to..."

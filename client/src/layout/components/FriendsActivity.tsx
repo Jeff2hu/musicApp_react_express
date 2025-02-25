@@ -13,8 +13,6 @@ const FriendsActivity = () => {
   const onlineUsers = useChatStore((state) => state.onlineUsers);
   const { data: users, isLoading } = useGetAllUsers();
 
-  console.log(userActivities);
-
   return (
     <div className="h-full bg-zinc-900 rounded-lg flex flex-col">
       <div className="flex justify-between items-center p-4 border-b border-zinc-800">
@@ -42,7 +40,7 @@ const FriendsActivity = () => {
                     </Avatar>
 
                     <div
-                      className={`absolute bottom-0 right-0 size-3 rounded-full border-2 border-zinc-900 bg-zinc-300 ${
+                      className={`absolute bottom-0 right-0 size-3 rounded-full border-2 border-zinc-900 ${
                         onlineUsers.has(user.clerkId)
                           ? "bg-emerald-400"
                           : "bg-zinc-300"

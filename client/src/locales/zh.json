@@ -34,7 +34,13 @@
     "TITLE": "搜尋"
   },
   "CHAT": {
-    "TITLE": "聊天"
+    "TITLE": "聊天",
+    "ONLINE": "在線",
+    "OFFLINE": "離線",
+    "MESSAGE_PLACEHOLDER": "請輸入訊息...",
+    "SEND": "發送",
+    "NO_CONVERSATION_SELECTED": "未選擇對話",
+    "SELECT_A_CONVERSATION_OR_START_A_NEW_ONE": "選擇一個對話或開始新的對話"
   },
   "FRIENDS_ACTIVITY": {
     "TITLE": "他們正在聽..."

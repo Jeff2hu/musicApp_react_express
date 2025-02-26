@@ -4,7 +4,7 @@ import { createMessage } from "../service/message.service.js";
 export const initSocket = (httpServer) => {
   const io = new Server(httpServer, {
     cors: {
-      origin: "http://localhost:3000",
+      origin: process.env.CLIENT_URL,
       credentials: true,
     },
   });

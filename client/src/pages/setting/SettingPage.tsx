@@ -39,12 +39,6 @@ const SettingPage = () => {
             />
           </div>
         </div>
-
-        {/* 其他設定區塊（可以根據需求添加） */}
-        <div className="border rounded-lg p-4">
-          <h2 className="text-xl font-semibold mb-4">{t("SETTING.THEME")}</h2>
-          {/* 這裡可以添加主題相關的設定 */}
-        </div>
       </div>
     </div>
   );

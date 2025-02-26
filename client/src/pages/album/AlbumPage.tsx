@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { formatDuration } from "@/utils/formatDuration";
 import usePlayerStore from "@/zustand/usePlayerStore";
+import { useSettingStore } from "@/zustand/useSettingsStore";
 import gsap from "gsap";
 import { Clock, Pause, Play } from "lucide-react";
 import { useEffect, useRef } from "react";
@@ -15,6 +16,7 @@ const AlbumPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
+  const isMobile = useSettingStore((state) => state.isMobile);
   const { currentSong, isPlaying, playAlbum, togglePlay } = usePlayerStore();
 
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -64,7 +66,7 @@ const AlbumPage = () => {
   }
 
   return (
-    <ScrollArea className="h-full rounded-lg">
+    <ScrollArea className="h-[calc(100vh-188px)] rounded-lg">
       {!isAlbumLoading && album ? (
         <div ref={containerRef}>
           <div className="relative">
@@ -80,33 +82,39 @@ const AlbumPage = () => {
                 <img
                   src={album.imageUrl}
                   alt={album.title}
-                  className="w-[240px] h-[240px] shadow-xl rounded"
+                  className="w-[120px] h-[120px] md:w-[240px] md:h-[240px] shadow-xl rounded"
                 />
 
                 <div className="flex flex-col justify-end">
                   <p className="text-sm font-medium">Album</p>
-                  <h1 className="text-7xl font-bold my-4">{album.title}</h1>
-                  <div className="flex items-center gap-2 text-sm text-zinc-100">
+                  <h1 className="text-3xl md:text-7xl font-bold my-4">
+                    {album.title}
+                  </h1>
+                  <div className="flex flex-col md:flex-row items-start md:items-center gap-2 text-sm text-zinc-100">
                     <span className="font-medium text-white">
                       {album.artist}
                     </span>
-                    <span>． {album.songs.length} songs</span>
-                    <span>． {album.releaseYear}</span>
+                    <span>
+                      {!isMobile && "．"} {album.songs.length} songs
+                    </span>
+                    <span>
+                      {!isMobile && "．"} {album.releaseYear}
+                    </span>
                   </div>
                 </div>
               </div>
 
               {/* play button */}
-              <div className="px-6 pb-4 flex items-center gap-6">
+              <div className="px-6 pb-4 flex items-center">
                 <Button
                   size="icon"
                   onClick={handlePlayAlbum}
-                  className="size-14 rounded-full bg-green-500 hover:bg-green-400 hover:scale-105 transition-all"
+                  className="size-8 md:size-14 rounded-full bg-emerald-500 hover:bg-emerald-600 hover:scale-105 transition-all"
                 >
                   {isPlayingCurrentAlbum && isPlaying ? (
-                    <Pause className="size-7 text-black" />
+                    <Pause className="size-4 md:size-7 text-black/50 hover:text-white" />
                   ) : (
-                    <Play className="size-7 text-black" />
+                    <Play className="size-4 md:size-7 text-black/50 hover:text-white" />
                   )}
                 </Button>
               </div>
@@ -157,7 +165,7 @@ const AlbumPage = () => {
                             <img
                               src={song.imageUrl}
                               alt={song.title}
-                              className="size-12"
+                              className="size-8 md:size-12"
                             />
                             <div className="flex flex-col gap-1">
                               <div className="font-medium text-white">

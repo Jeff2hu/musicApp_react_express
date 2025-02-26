@@ -96,7 +96,7 @@ const PlayBackControl = () => {
               variant="ghost"
               disabled={!currentSong}
               onClick={togglePlay}
-              className="bg-white hover:bg-white/80 text-black rounded-full size-8"
+              className="bg-emerald-500 hover:bg-emerald-600 text-black/50 rounded-full size-8 hover:text-white transition-all duration-150"
             >
               {isPlaying ? (
                 <Pause className="size-4 md:size-6" />

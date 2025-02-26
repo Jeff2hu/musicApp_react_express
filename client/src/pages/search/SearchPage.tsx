@@ -8,39 +8,39 @@ import { useNavigate } from "react-router-dom";
 
 const imageDetails = [
   {
-    artist: "Lany",
-    album: "gg bb xx",
+    artist: "City Lights",
+    album: "Urban Jungle",
+    audio: "/songs/15.mp3",
+    year: "2021",
+  },
+  {
+    artist: "Silver Shadows",
+    album: "Moonlight Dance",
+    audio: "/songs/14.mp3",
+    year: "2021",
+  },
+  {
+    artist: "Electric Dreams",
+    album: "Lost in Tokyo",
+    audio: "/songs/3.mp3",
+    year: "2021",
+  },
+  {
+    artist: "Sarah Mitchell",
+    album: "Stay With Me",
     audio: "/songs/1.mp3",
     year: "2021",
   },
   {
-    artist: "Tai verdes",
-    album: "TV",
-    audio: "/songs/2.mp3",
+    artist: "Luna Bay",
+    album: "Starlight",
+    audio: "/songs/10.mp3",
     year: "2021",
   },
   {
-    artist: "Lauv",
-    album: "All 4 Nothing",
-    audio: "/songs/12.mp3",
-    year: "2021",
-  },
-  {
-    artist: "Clairo",
-    album: "Sling",
-    audio: "/songs/4.mp3",
-    year: "2021",
-  },
-  {
-    artist: "Gareth.T",
-    album: "Boyfriend Material",
+    artist: "Night Runners",
+    album: "Neon Lights",
     audio: "/songs/5.mp3",
-    year: "2021",
-  },
-  {
-    artist: "Tessa Violet",
-    album: "Crush",
-    audio: "/songs/6.mp3",
     year: "2018",
   },
   {
@@ -50,22 +50,22 @@ const imageDetails = [
     year: "2022",
   },
   {
-    artist: "Billie Eilish",
-    album: "Happier Than Ever",
-    audio: "/songs/8.mp3",
+    artist: "Cyber Pulse",
+    album: "Neon Dreams",
+    audio: "/songs/13.mp3",
     year: "2021",
   },
 
   {
-    artist: "Dua Lipa",
-    album: "Don't Start Now",
-    audio: "/songs/9.mp3",
+    artist: "The Wanderers",
+    album: "Midnight Drive",
+    audio: "/songs/2.mp3",
     year: "2019",
   },
   {
-    artist: "Snoop Dogg",
-    album: "Tha Blue Carpet Treatment",
-    audio: "/songs/10.mp3",
+    artist: "Urban Echo",
+    album: "City Rain",
+    audio: "/songs/7.mp3",
     year: "2006",
   },
 ];
@@ -281,7 +281,7 @@ const SearchPage = () => {
         {Array.from({ length: 10 }).map((_, index) => (
           <img
             key={index}
-            src={`/search/${index + 1}.jpg`}
+            src={`/cover-images/${index + 1}.jpg`}
             alt="Image Background"
             className="absolute scale-115 blur-[10px] w-full h-full object-cover"
           />
@@ -298,8 +298,10 @@ const SearchPage = () => {
             key={index}
             className={cn(
               "slide",
-              "absolute w-[400px] h-[500px] opacity-0 overflow-hidden top-[50%] translate-x-[-50%] translate-y-[-50%]",
-              index % 2 === 0 ? "left-[30%]" : "left-[70%]"
+              "absolute w-[200px] h-[250px] md:w-[400px] md:h-[500px] opacity-0 overflow-hidden top-[50%] translate-x-[-50%] translate-y-[-50%]",
+              index % 2 === 0
+                ? "left-[40%] md:left-[30%]"
+                : "left-[60%] md:left-[70%]"
             )}
             style={{ transform: `translateZ(${index * 1500 - 13500}px)` }}
           >
@@ -309,7 +311,7 @@ const SearchPage = () => {
             <p className="text-sx text-zinc-400 font-semibold text-right mb-2">
               {image.album}．{image.year}
             </p>
-            <img src={`/search/${index + 1}.jpg`} alt="Image" />
+            <img src={`/cover-images/${index + 1}.jpg`} alt="Image" />
           </div>
         ))}
       </div>

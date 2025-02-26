@@ -15,6 +15,7 @@ export const useGetAllUsers = () => {
   return useQuery({
     queryKey: [USER_BASE_URL.GET_ALL_USERS],
     queryFn: getAllUsersApi,
+    retry: false,
   });
 };
 

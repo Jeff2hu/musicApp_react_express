@@ -8,6 +8,10 @@ const errorApiHandler = (error: unknown) => {
       return;
     }
 
+    if (error.status === 401) {
+      return;
+    }
+
     setAlertOption({
       open: true,
       title: `API錯誤 請通知開發者 (${error.status})`,

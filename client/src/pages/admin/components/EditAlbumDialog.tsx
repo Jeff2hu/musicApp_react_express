@@ -161,7 +161,7 @@ const EditAlbumDialog = ({
       <DialogContent
         ref={dialogContentRef}
         className={cn(
-          "bg-zinc-900 border-zinc-700 max-h-[90vh] overflow-y-auto w-full",
+          "bg-zinc-900 border-zinc-700 max-h-[90vh] overflow-y-auto w-[80vw] md:w-full",
           (isCreatingAlbumPending || isUpdatingAlbumPending) &&
             "overflow-y-hidden"
         )}

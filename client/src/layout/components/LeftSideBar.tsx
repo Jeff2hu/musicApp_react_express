@@ -3,6 +3,7 @@ import PlaylistsSkeleton from "@/components/skeletons/PlaylistsSkeleton";
 import { buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import { useSettingStore } from "@/zustand/useSettingsStore";
 import {
   HomeIcon,
   LibraryIcon,
@@ -15,6 +16,7 @@ import { Link } from "react-router-dom";
 
 const LeftSideBar = () => {
   const { t } = useTranslation();
+  const isMobile = useSettingStore((state) => state.isMobile);
   const { data: albums, isLoading: isAlbumsLoading } = useGetAlbums();
 
   const links = [
@@ -43,7 +45,9 @@ const LeftSideBar = () => {
   return (
     <div className="h-full flex flex-col gap-2">
       {/* Navigation Menu */}
-      <div className="bg-zinc-900 rounded-lg p-4">
+      <div
+        className={cn("bg-transparent md:bg-zinc-900 rounded-lg p-4 w-full")}
+      >
         <div className="space-y-2">
           {links.map((link) => (
             <Link
@@ -58,18 +62,20 @@ const LeftSideBar = () => {
               )}
             >
               <link.icon className="mr-2 size-5" />
-              <span className="hidden md:inline">{link.name}</span>
+              <span className="inline">{link.name}</span>
             </Link>
           ))}
         </div>
       </div>
 
+      {isMobile && <div className="border-t border-zinc-800 h-10 mt-5 -mb-5" />}
+
       {/* Library Menu */}
-      <div className="flex-1 rounded-lg p-4 bg-zinc-900">
+      <div className="flex-1 rounded-lg p-4 bg-transparent md:bg-zinc-900">
         <div className="flex justify-between items-center mb-4">
-          <div className="flex items-center text-white p-2">
+          <div className="flex justify-center md:justify-start items-center text-white p-2">
             <LibraryIcon className="mr-2 size-5" />
-            <span className="hidden md:inline">{t("LAYOUT.PLAYLIST")}</span>
+            <span className="inline">{t("LAYOUT.PLAYLIST")}</span>
           </div>
         </div>
 
@@ -88,7 +94,7 @@ const LeftSideBar = () => {
                     className="size-12 rounded-md flex-shrink-0 object-cover"
                   />
 
-                  <div className="flex-1 min-w-0 hidden md:block">
+                  <div className="flex-1 min-w-0">
                     <p className="font-medium truncate">{album.title}</p>
                     <p className="text-sm text-zinc-400 truncate">
                       Album ． {album.artist}

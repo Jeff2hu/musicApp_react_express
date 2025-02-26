@@ -1,7 +1,8 @@
 import { useGetAlbums } from "@/api/album/hook";
 import { useGetSongs } from "@/api/song/hook";
 import { useGetStats } from "@/api/stats/hook";
-import Loading from "@/components/Loading";
+import StatsDashboardSkeleton from "@/components/skeletons/StatsDashboardSkeleton";
+import TableSkeleton from "@/components/skeletons/TableSkeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuthStore } from "@/zustand/useAuthStore";
 import { Album, Music } from "lucide-react";
@@ -24,12 +25,12 @@ const AdminPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col gap-10 bg-gradient-to-b from-zinc-900 via-zinc-800/70 to-black text-zinc-100 p-8">
-      {isStatsLoading ? <Loading /> : <HeaderIcon />}
+      <HeaderIcon />
 
-      {isStatsLoading ? <Loading /> : <StatsDashboard />}
+      {isStatsLoading ? <StatsDashboardSkeleton /> : <StatsDashboard />}
 
       {isSongsLoading || isAlbumsLoading ? (
-        <Loading />
+        <TableSkeleton />
       ) : (
         <Tabs defaultValue="songs" className="w-full">
           <TabsList className="p-1 bg-zinc-800/50 mb-4">

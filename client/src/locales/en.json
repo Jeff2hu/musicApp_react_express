@@ -40,7 +40,8 @@
     "MESSAGE_PLACEHOLDER": "Type a message...",
     "SEND": "Send",
     "NO_CONVERSATION_SELECTED": "No conversation selected",
-    "SELECT_A_CONVERSATION_OR_START_A_NEW_ONE": "Select a conversation or start a new one"
+    "SELECT_A_CONVERSATION_OR_START_A_NEW_ONE": "Select a conversation or start a new one",
+    "PLEASE_LOGIN_OR_SELECT_A_USER": "Please login or select a user"
   },
   "FRIENDS_ACTIVITY": {
     "TITLE": "What they're listening to..."

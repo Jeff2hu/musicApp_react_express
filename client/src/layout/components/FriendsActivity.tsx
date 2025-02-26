@@ -57,9 +57,7 @@ const FriendsActivity = () => {
                       {userActivities.get(user.clerkId)?.activity ===
                       "MUSIC" ? (
                         <Music className="size-3.5 text-emerald-400 shrink-0" />
-                      ) : (
-                        <div className="mt-1 text-zinc-400">Idle</div>
-                      )}
+                      ) : null}
                     </div>
                     {userActivities.get(user.clerkId)?.activity === "MUSIC" ? (
                       <div className="mt-1">
@@ -71,9 +69,9 @@ const FriendsActivity = () => {
                         </div>
                       </div>
                     ) : onlineUsers.has(user.clerkId) ? (
-                      <div className="text-zinc-400 text-sm">Idle</div>
+                      <div className="text-zinc-500/80 text-sm">Idle</div>
                     ) : (
-                      <div className="text-zinc-200 text-sm">Offline</div>
+                      <div className="text-zinc-500/50 text-sm">Offline</div>
                     )}
                   </div>
                 </div>

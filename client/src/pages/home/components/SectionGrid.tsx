@@ -15,7 +15,7 @@ const SectionGrid = <T extends SongLite>({
   loading,
 }: Props<T>) => {
   return (
-    <div className="mb-8 p-4">
+    <div className="mb-6 p-4">
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-xl sm:text-2xl font-bold">{title}</h2>
       </div>
@@ -23,7 +23,7 @@ const SectionGrid = <T extends SongLite>({
       {loading || !songs ? (
         <SectionGridSkeleton />
       ) : (
-        <div className="flex gap-3 rounded-md p-4 justify-between">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full min-w-0">
           {songs.map((song) => (
             <SongCard key={song._id} song={song} />
           ))}
@@ -40,10 +40,16 @@ const SongCard = ({ song }: { song: SongLite }) => {
   return (
     <div
       onClick={() => handlePlaySong(song)}
-      className="flex flex-col items-center gap-5 rounded-md p-6 bg-zinc-900/50 hover:bg-zinc-700/70 transition-all duration-300 w-full cursor-pointer group relative"
+      className="flex flex-col items-center gap-3 rounded-md p-4 bg-zinc-900/50 hover:bg-zinc-700/70 transition-all duration-300 cursor-pointer group relative w-full max-w-[280px] mx-auto h-full min-w-0"
     >
-      <img src={song.imageUrl} alt={song.title} className="size-44" />
-      <div className="flex-1 space-y-2 justify-start w-full">
+      <div className="w-full aspect-square">
+        <img
+          src={song.imageUrl}
+          alt={song.title}
+          className="w-full h-full object-cover rounded-md"
+        />
+      </div>
+      <div className="flex-1 space-y-2 w-full">
         <h1 className="font-medium truncate">{song.title}</h1>
         <p className="text-sm text-zinc-400 truncate">{song.artist}</p>
       </div>

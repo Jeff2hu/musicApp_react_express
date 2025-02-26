@@ -1,5 +1,4 @@
 import { useGetSongMadeForYou, useGetSongTrending } from "@/api/song/hook";
-import TopBar from "@/components/TopBar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useTranslation } from "react-i18next";
 import FeatureSection from "./components/FeatureSection";
@@ -13,8 +12,7 @@ const HomePage = () => {
     useGetSongTrending();
 
   return (
-    <ScrollArea className="rounded-md overflow-hidden h-full bg-gradient-to-t from-zinc-900 to-black">
-      <TopBar />
+    <ScrollArea className="rounded-md overflow-hidden h-[calc(100vh-188px)] bg-gradient-to-t from-zinc-900 to-black">
       <div className="p-4 sm:p-6">
         <h1 className="text-2xl sm:text-3xl font-bold mb-6">Good Afternoon</h1>
         <FeatureSection />

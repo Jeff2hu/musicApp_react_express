@@ -40,7 +40,8 @@
     "MESSAGE_PLACEHOLDER": "メッセージを入力してください...",
     "SEND": "送信",
     "NO_CONVERSATION_SELECTED": "会話が選択されていません",
-    "SELECT_A_CONVERSATION_OR_START_A_NEW_ONE": "会話を選択するか、新しい会話を開始してください"
+    "SELECT_A_CONVERSATION_OR_START_A_NEW_ONE": "会話を選択するか、新しい会話を開始してください",
+    "PLEASE_LOGIN_OR_SELECT_A_USER": "ログインするか、ユーザーを選択してください"
   },
   "FRIENDS_ACTIVITY": {
     "TITLE": "彼らが何を聞いているか..."

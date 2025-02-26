@@ -40,7 +40,8 @@
     "MESSAGE_PLACEHOLDER": "請輸入訊息...",
     "SEND": "發送",
     "NO_CONVERSATION_SELECTED": "未選擇對話",
-    "SELECT_A_CONVERSATION_OR_START_A_NEW_ONE": "選擇一個對話或開始新的對話"
+    "SELECT_A_CONVERSATION_OR_START_A_NEW_ONE": "選擇一個對話或開始新的對話",
+    "PLEASE_LOGIN_OR_SELECT_A_USER": "請登錄或選擇一個用戶"
   },
   "FRIENDS_ACTIVITY": {
     "TITLE": "他們正在聽..."

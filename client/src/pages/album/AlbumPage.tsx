@@ -141,6 +141,8 @@ const AlbumPage = () => {
                           <div className="flex items-center justify-center transition-all">
                             {isCurrentSong && isPlaying ? (
                               <Pause className="size-4" />
+                            ) : isCurrentSong ? (
+                              <Play className="size-4" />
                             ) : (
                               <span className="group-hover:hidden">
                                 {index + 1}

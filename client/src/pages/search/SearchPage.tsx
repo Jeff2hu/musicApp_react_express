@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import gsap from "gsap";
 import ScrollToPlugin from "gsap/ScrollToPlugin";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { ArrowBigLeft, Volume2, VolumeOff } from "lucide-react";
+import { Home, Volume2, VolumeOff } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -256,9 +256,9 @@ const SearchPage = () => {
       <audio ref={audioRef} className="hidden" />
       <div
         onClick={() => navigate("/")}
-        className="fixed top-5 left-5 size-10 text-white cursor-pointer hover:text-gray-400 hover:rotate-45 transition-all duration-150 z-50"
+        className="fixed top-5 left-5 size-10 text-white cursor-pointer hover:text-gray-400 transition-all duration-150 z-50"
       >
-        <ArrowBigLeft className="size-10" />
+        <Home className="size-10" />
       </div>
       <div
         onClick={() => {

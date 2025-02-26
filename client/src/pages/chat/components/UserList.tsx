@@ -3,14 +3,18 @@ import UserListSkeleton from "@/components/skeletons/UserListSkeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useChatStore } from "@/zustand/useChatStore";
+import { useSettingStore } from "@/zustand/useSettingsStore";
+import { Music } from "lucide-react";
 
 const UserList = () => {
-  const { setSelectedUser, selectedUser, onlineUsers } = useChatStore();
+  const isMobile = useSettingStore((state) => state.isMobile);
+  const { setSelectedUser, selectedUser, onlineUsers, userActivities } =
+    useChatStore();
   const { data: users, isLoading: isLoadingUsers } = useGetAllUsers();
 
   return (
-    <div className="border-r border-zinc-700">
-      <div className="flex lfex-col h-full">
+    <div className="bg-transparent md:border-r md:border-zinc-700">
+      <div className="flex flex-col h-full">
         <ScrollArea className="h-[calc(100vh-280px)]">
           <div className="space-y-2 p-4">
             {isLoadingUsers || !users ? (
@@ -20,7 +24,7 @@ const UserList = () => {
                 <div
                   key={user._id}
                   onClick={() => setSelectedUser(user)}
-                  className={`flex items-center justify-center lg:justify-start gap-3 p-3 rounded-lg cursor-pointer transition-colors ${
+                  className={`flex items-center justify-start gap-3 p-3 rounded-lg cursor-pointer transition-colors ${
                     selectedUser?._id === user._id
                       ? "bg-zinc-800"
                       : "hover:bg-zinc-800/50"
@@ -43,6 +47,32 @@ const UserList = () => {
                   <div className="flex flex-col gap-1">
                     <p className="text-sm font-medium">{user.fullName}</p>
                   </div>
+
+                  {isMobile && (
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        {userActivities.get(user.clerkId)?.activity ===
+                        "MUSIC" ? (
+                          <Music className="size-3.5 text-emerald-400 shrink-0" />
+                        ) : null}
+                      </div>
+                      {userActivities.get(user.clerkId)?.activity ===
+                      "MUSIC" ? (
+                        <div className="mt-1">
+                          <div className="mt-1 text-sm text-white font-medium truncate">
+                            {userActivities.get(user.clerkId)?.song?.title}
+                          </div>
+                          <div className="text-xs text-zinc-400 truncate">
+                            by {userActivities.get(user.clerkId)?.song?.artist}
+                          </div>
+                        </div>
+                      ) : onlineUsers.has(user.clerkId) ? (
+                        <div className="text-zinc-500/50 text-xs">Idle</div>
+                      ) : (
+                        <div className="text-zinc-500/50 text-xs">Offline</div>
+                      )}
+                    </div>
+                  )}
                 </div>
               ))
             )}

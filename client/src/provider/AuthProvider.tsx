@@ -1,4 +1,5 @@
 import { checkAdminApi } from "@/api/admin/api";
+import { setClerkGetToken } from "@/lib/axios";
 import { useAlert } from "@/zustand/useAlert";
 import { useAuthStore } from "@/zustand/useAuthStore";
 import { useChatStore } from "@/zustand/useChatStore";
@@ -11,25 +12,29 @@ interface AuthProviderProps {
 }
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
-  const { getToken, userId } = useAuth();
+  const { getToken, userId: clerkId } = useAuth();
 
   const setAlertOption = useAlert((state) => state.setAlertOption);
   const initSocket = useChatStore((state) => state.initSocket);
   const disconnectSocket = useChatStore((state) => state.disconnectSocket);
+
   const setUserId = useAuthStore((state) => state.setUserId);
 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // 設置 getToken 函數供 axios interceptor 使用
+    setClerkGetToken(getToken);
+
     const initAuth = async () => {
       try {
         const token = await getToken();
         if (token) {
           await checkAdminApi(token);
         }
-        if (userId) {
-          setUserId(userId);
-          initSocket(userId);
+        if (clerkId) {
+          setUserId(clerkId);
+          initSocket(clerkId);
         }
       } catch (error) {
         console.error("Error in AuthProvider", error);
@@ -46,7 +51,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     initAuth();
 
     return () => disconnectSocket();
-  }, [getToken, userId]);
+  }, [getToken, clerkId]);
 
   if (loading) {
     return (

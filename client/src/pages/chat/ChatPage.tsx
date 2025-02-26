@@ -1,9 +1,9 @@
 import { useGetUserMessages } from "@/api/user/hook";
 import ChatSkeleton from "@/components/skeletons/ChatSkeleton";
-import TopBar from "@/components/TopBar";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Message } from "@/type/message";
 import { useChatStore } from "@/zustand/useChatStore";
+import { useSettingStore } from "@/zustand/useSettingsStore";
 import { useUser } from "@clerk/clerk-react";
 import { format } from "date-fns";
 import { useEffect, useRef } from "react";
@@ -11,10 +11,12 @@ import { useTranslation } from "react-i18next";
 import { VariableSizeList } from "react-window";
 import ChatHeader from "./components/ChatHeader";
 import MessageInput from "./components/MessageInput";
+import MobileFriend from "./components/MobileFriend";
 import UserList from "./components/UserList";
 
 const ChatPage = () => {
   const { user } = useUser();
+  const isMobile = useSettingStore((state) => state.isMobile);
   const { selectedUser, messages } = useChatStore();
 
   const { isLoading: isLoadingMessages } = useGetUserMessages(
@@ -106,17 +108,15 @@ const ChatPage = () => {
 
   return (
     <main className="h-full rounded-lg bg-gradient-to-b from-black to-zinc-800 overflow-hidden">
-      <TopBar />
-
-      <div className="grid grid-cols-[80px_1fr] lg:grid-cols-[300px_1fr] h-[calc(100vh-180px)]">
-        <UserList />
+      <div className="grid md:grid-cols-[250px_1fr] h-[calc(100vh-180px)]">
+        {!isMobile && <UserList />}
 
         <div className="flex flex-col h-full">
           {selectedUser ? (
             <>
               <ChatHeader />
 
-              <div className="p-4 space-y-2" ref={scrollRef}>
+              <div className="space-y-2 p-2" ref={scrollRef}>
                 {isLoadingMessages ? (
                   <ChatSkeleton />
                 ) : (
@@ -151,9 +151,15 @@ export default ChatPage;
 
 const NoConversationSelected = () => {
   const { t } = useTranslation();
+  const isMobile = useSettingStore((state) => state.isMobile);
 
   return (
-    <div className="flex flex-col items-center justify-center h-full sapce-y-6">
+    <div className="flex flex-col items-center justify-center h-full sapce-y-6 relative">
+      {isMobile && (
+        <div className="absolute top-0 right-0">
+          <MobileFriend />
+        </div>
+      )}
       <img src="/logo.png" alt="logo" className="size-20 animate-bounce" />
 
       <div className="text-center">

@@ -4,6 +4,12 @@ import { getAllUsers } from "../service/user.service.js";
 export const getAllUsersController = async (req, res) => {
   try {
     const currentUserId = req.auth.userId;
+
+    if (!currentUserId) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
     const users = await getAllUsers(currentUserId);
     res
       .status(200)
@@ -17,6 +23,11 @@ export const getMessageByUserIdController = async (req, res) => {
   try {
     const currentUserId = req.auth.userId;
     const { userId } = req.params;
+
+    if (!currentUserId) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
 
     const messages = await getMessageByUserId(currentUserId, userId);
     res

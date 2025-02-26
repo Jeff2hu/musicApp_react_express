@@ -1,4 +1,5 @@
 import { AuthenticateWithRedirectCallback } from "@clerk/clerk-react";
+import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import MainLayout from "./layout/MainLayout";
 import AdminPage from "./pages/admin/AdminPage";
@@ -9,9 +10,21 @@ import HomePage from "./pages/home/HomePage";
 import SearchPage from "./pages/search/SearchPage";
 import SettingPage from "./pages/setting/SettingPage";
 import { useAuthStore } from "./zustand/useAuthStore";
+import { useSettingStore } from "./zustand/useSettingsStore";
 
 function App() {
   const isAdmin = useAuthStore((state) => state.isAdmin);
+  const setIsMobile = useSettingStore((state) => state.setIsMobile);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [setIsMobile]);
 
   return (
     <Routes>

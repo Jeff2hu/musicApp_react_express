@@ -18,7 +18,7 @@ const MessageInput = () => {
       setAlertOption({
         open: true,
         title: "Error",
-        description: "Please Login or Select a User",
+        description: t("CHAT.PLEASE_LOGIN_OR_SELECT_A_USER"),
       });
       setNewMassage("");
       return;

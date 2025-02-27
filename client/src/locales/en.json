@@ -3,7 +3,8 @@
     "ACTIONS": "Actions",
     "CANCEL": "Cancel",
     "SUBMIT": "Submit",
-    "UPLOAD": "Upload"
+    "UPLOAD": "Upload",
+    "LOGIN_TO_SEE_MORE": "Login to see more"
   },
   "AUTH_CALLBACK": {
     "AUTH_ING": "Authenticating with Google..."

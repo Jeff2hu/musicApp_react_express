@@ -256,9 +256,9 @@ const SearchPage = () => {
       <audio ref={audioRef} className="hidden" />
       <div
         onClick={() => navigate("/")}
-        className="fixed top-5 left-5 size-10 text-white cursor-pointer hover:text-gray-400 transition-all duration-150 z-50"
+        className="fixed top-5 left-5 size-6 md:size-10 text-white cursor-pointer hover:text-gray-400 transition-all duration-150 z-50"
       >
-        <Home className="size-10" />
+        <Home className="size-6 md:size-10" />
       </div>
       <div
         onClick={() => {
@@ -268,12 +268,12 @@ const SearchPage = () => {
             setIsMuted(!muted);
           }
         }}
-        className="fixed top-5 right-5 size-10 text-white cursor-pointer hover:text-gray-400 transition-all duration-150 z-50"
+        className="fixed top-5 right-5 size-6 md:size-10 text-white cursor-pointer hover:text-gray-400 transition-all duration-150 z-50"
       >
         {isMuted ? (
-          <VolumeOff className="size-9 text-red-400" />
+          <VolumeOff className="size-6 md:size-10 text-red-400" />
         ) : (
-          <Volume2 className="size-9" />
+          <Volume2 className="size-6 md:size-10" />
         )}
       </div>
 

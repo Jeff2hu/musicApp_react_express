@@ -3,7 +3,8 @@
     "ACTIONS": "操作",
     "CANCEL": "キャンセル",
     "SUBMIT": "送信",
-    "UPLOAD": "アップロード"
+    "UPLOAD": "アップロード",
+    "LOGIN_TO_SEE_MORE": "ログインして詳細を見る"
   },
   "AUTH_CALLBACK": {
     "AUTH_ING": "Google で認証中..."

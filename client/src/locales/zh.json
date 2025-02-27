@@ -3,7 +3,8 @@
     "ACTIONS": "操作",
     "CANCEL": "取消",
     "SUBMIT": "提交",
-    "UPLOAD": "上傳"
+    "UPLOAD": "上傳",
+    "LOGIN_TO_SEE_MORE": "登錄以查看更多"
   },
   "AUTH_CALLBACK": {
     "AUTH_ING": "正在使用 Google 進行驗證..."

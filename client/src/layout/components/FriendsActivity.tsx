@@ -2,6 +2,7 @@ import { useGetAllUsers } from "@/api/user/hook";
 import UserListSkeleton from "@/components/skeletons/UserListSkeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useAuthStore } from "@/zustand/useAuthStore";
 import { useChatStore } from "@/zustand/useChatStore";
 import { Music, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -11,6 +12,8 @@ const FriendsActivity = () => {
 
   const userActivities = useChatStore((state) => state.userActivities);
   const onlineUsers = useChatStore((state) => state.onlineUsers);
+  const userId = useAuthStore((state) => state.userId);
+
   const { data: users, isLoading } = useGetAllUsers();
 
   return (
@@ -24,7 +27,14 @@ const FriendsActivity = () => {
 
       <ScrollArea className="flex-1">
         {isLoading || !users || users?.length === 0 ? (
-          <UserListSkeleton />
+          <>
+            {!userId && (
+              <p className="text-zinc-300/50 text-sm text-center my-2">
+                {t("SYSTEM.LOGIN_TO_SEE_MORE")}
+              </p>
+            )}
+            <UserListSkeleton />
+          </>
         ) : (
           <div className="p-4 space-y-4">
             {users?.map((user) => (

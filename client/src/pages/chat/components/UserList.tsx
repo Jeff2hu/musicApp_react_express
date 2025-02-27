@@ -2,11 +2,15 @@ import { useGetAllUsers } from "@/api/user/hook";
 import UserListSkeleton from "@/components/skeletons/UserListSkeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useAuthStore } from "@/zustand/useAuthStore";
 import { useChatStore } from "@/zustand/useChatStore";
 import { useSettingStore } from "@/zustand/useSettingsStore";
 import { Music } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const UserList = () => {
+  const { t } = useTranslation();
+  const userId = useAuthStore((state) => state.userId);
   const isMobile = useSettingStore((state) => state.isMobile);
   const { setSelectedUser, selectedUser, onlineUsers, userActivities } =
     useChatStore();
@@ -18,7 +22,14 @@ const UserList = () => {
         <ScrollArea className="h-[calc(100vh-280px)]">
           <div className="space-y-2 p-4">
             {isLoadingUsers || !users ? (
-              <UserListSkeleton />
+              <>
+                {!userId && (
+                  <p className="text-zinc-300/50 text-sm text-center my-2">
+                    {t("SYSTEM.LOGIN_TO_SEE_MORE")}
+                  </p>
+                )}
+                <UserListSkeleton />
+              </>
             ) : (
               users?.map((user) => (
                 <div

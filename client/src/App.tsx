@@ -20,6 +20,10 @@ function App() {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
+
+    // 初始載入時先執行一次判斷
+    handleResize();
+
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);

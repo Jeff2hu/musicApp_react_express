@@ -134,35 +134,35 @@ const SearchPage = () => {
 
     const slides = document.querySelectorAll(".slide");
     const activesSlideImages = gsap.utils.toArray(".active-slide img");
-    const scrollDistance = 750 - currentActiveIndexRef.current * 30;
+    // const scrollDistance = 750 - currentActiveIndexRef.current * 30;
 
-    let isScrolling = false;
-    let isAnimating = false;
+    // let isScrolling = false;
+    // let isAnimating = false;
 
-    containerRef.current?.addEventListener("wheel", (e) => {
-      e.preventDefault();
+    // containerRef.current?.addEventListener("wheel", (e) => {
+    //   e.preventDefault();
 
-      if (isScrolling || isAnimating) return;
+    //   if (isScrolling || isAnimating) return;
 
-      const direction = e.deltaY > 0 ? 1 : -1;
-      const currentScroll = window.scrollY;
-      const nextScroll = currentScroll + direction * scrollDistance;
+    //   const direction = e.deltaY > 0 ? 1 : -1;
+    //   const currentScroll = window.scrollY;
+    //   const nextScroll = currentScroll + direction * scrollDistance;
 
-      isScrolling = true;
-      isAnimating = true;
+    //   isScrolling = true;
+    //   isAnimating = true;
 
-      gsap.to(window, {
-        scrollTo: nextScroll,
-        duration: 0,
-        ease: "power3.inOut",
-        onComplete: () => {
-          isScrolling = false;
-          setTimeout(() => {
-            isAnimating = false;
-          }, 300);
-        },
-      });
-    });
+    //   gsap.to(window, {
+    //     scrollTo: nextScroll,
+    //     duration: 0,
+    //     ease: "power3.inOut",
+    //     onComplete: () => {
+    //       isScrolling = false;
+    //       setTimeout(() => {
+    //         isAnimating = false;
+    //       }, 300);
+    //     },
+    //   });
+    // });
 
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
